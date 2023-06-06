@@ -1,0 +1,58 @@
+local function reg(name)
+    minetest.log("morecurves:"..name)
+    minetest.register_node("morecurves:"..name,
+    {
+        description = name,
+        drawtype = "mesh",
+        mesh = name..".obj",
+        paramtype2 = "facedir",
+        paramtype = "light",
+        tiles = {"top.png","bottom.png", "left.png", "right.png","front.png","back.png"},
+        groups = { oddly_breakable_by_hand=3 },
+    })
+end
+
+reg("_b_1")
+reg("_b_2")
+reg("_b_3")
+reg("_b_4")
+reg("a_1")
+reg("a_1r")
+reg("a_2")
+reg("a_2r")
+reg("a_3")
+reg("a_3r")
+reg("a_4")
+reg("a1_1")
+reg("a1_2")
+reg("a1_3")
+reg("a1_4")
+reg("a2_1")
+reg("a2_1r")
+reg("a2_2")
+reg("a2_2r")
+reg("a2_3")
+reg("a2_3r")
+reg("a2_4")
+reg("af_1")
+reg("af_2")
+reg("af_3")
+reg("af_4")
+reg("b_1")
+reg("b_2")
+reg("b_3")
+reg("b_4")
+reg("c_1")
+reg("c_1r")
+reg("c_2")
+reg("c_2r")
+reg("c_3")
+reg("c_3r")
+reg("c_4")
+reg("c1_1")
+reg("c1_1r")
+reg("c1_2")
+reg("c1_2r")
+reg("c1_3")
+reg("c1_3r")
+reg("c1_4")
