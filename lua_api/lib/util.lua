@@ -46,4 +46,47 @@ function util.round(val,precision)
     return val>=0 and math.floor(val*math.pow(10,precision)+0.5)/math.pow(10,precision) or math.ceil(val*math.pow(10,precision)-0.5)/math.pow(10,precision)
 end
 
+-- x' = (x)cos(rot°) - (y)sin(rot°)
+-- y' = (y)cos(rot°) + (x)sin(rot°)
+-- always rotate UV's around 0.5,0.5 - which is the origin for them
+function util.rotate_uv(tx, ty, rot)
+    rot = rot or 1
+    if rot > 4 then -- Flip Horizontally around 0.5
+        rot = rot - 4
+        tx = 1 - tx
+    end
+
+    --Rotate around 0.5,0.5. Add that offset first
+    tx = tx + 0.5
+    ty = ty + 0.5
+
+    -- Now actually rotate
+    local tempx, tempy = tx, ty
+    if rot == 1 then -- 0
+    -- do nothing
+    elseif rot == 2 then -- 90
+        tempx = - ty
+        tempy = tx
+    elseif rot == 3 then -- 180
+        tempx = - tx
+        tempy = - ty
+    else --270
+        tempx = ty
+        tempy = - tx
+    end
+
+    -- subtract the offset now that rotation is done
+    tempx = tempx - 0.5
+    tempy = tempy - 0.5
+
+    return tempx, tempy
+end
+
+function util.rotate_vector_uv(v,rot)
+    if not util.istable(v) then util.error("vector wasn't a vector.") end
+    local cv = util.copy(v)
+    cv.tx, cv.ty = util.rotate_uv(cv.tx, cv.ty, rot)
+    return cv
+end
+
 return util

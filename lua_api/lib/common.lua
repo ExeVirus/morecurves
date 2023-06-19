@@ -7,8 +7,11 @@ local validate_vector = vector.validate_vector
 local error = shapes.util.error
 local istable = shapes.util.istable
 local isnumber = shapes.util.isnumber
+local rotate_vector_uv = shapes.util.rotate_vector_uv
+local copy = shapes.util.copy
 
-function common.quad(bl,tl,tr,br,group)
+function common.quad(bl,tl,tr,br,group,rot)
+    local bl,tl,tr,br = copy(bl),copy(tl),copy(tr),copy(br)
     validate_vector(bl)
     validate_vector(tl)
     validate_vector(tr)
@@ -20,7 +23,13 @@ function common.quad(bl,tl,tr,br,group)
     if vector.determinant(p1,p2,p3) > 0.001 then
         error("Points provided are not co-planar")
     end
-    if not isnumber(group) then error("5th arg: expected number, got "..type(group)) end
+    if not isnumber(group) then error("5th arg(group): expected number, got "..type(group)) end
+    if not isnumber(rot) then error("6th arg(rotation): expected number, got "..type(group)) end
+
+    local tbl = rotate_vector_uv(bl,rot)
+    local ttl = rotate_vector_uv(tl,rot)
+    local ttr = rotate_vector_uv(tr,rot)
+    local tbr = rotate_vector_uv(br,rot)
 
     local n = vector.cross(vector.subtract(bl,tl),vector.subtract(bl,tr))
 
@@ -31,9 +40,9 @@ function common.quad(bl,tl,tr,br,group)
         n.x, n.y, n.z,
         n.x, n.y, n.z,
         n.x, n.y, n.z,
-        tl.tx, tl.ty,
-        bl.tx, bl.ty,
-        tr.tx, tr.ty,
+        ttl.tx, ttl.ty,
+        tbl.tx, tbl.ty,
+        ttr.tx, ttr.ty,
         group
     )
 
@@ -44,19 +53,27 @@ function common.quad(bl,tl,tr,br,group)
         n.x, n.y, n.z,
         n.x, n.y, n.z,
         n.x, n.y, n.z,
-        br.tx, br.ty,        
-        tr.tx, tr.ty,
-        bl.tx, bl.ty,
+        tbr.tx, tbr.ty,        
+        ttr.tx, ttr.ty,
+        tbl.tx, tbl.ty,
         group
     )
 end
 
-function common.tri(bl,tl,tr,group)
+function common.tri(bl,tl,tr,group,rot)
+    local bl,tl,tr = copy(bl),copy(tl),copy(tr)
     if not isnumber(group) then error("4th arg: expected number, got "..type(group)) end
     validate_vector(bl)
     validate_vector(tl)
     validate_vector(tr)
+    if not isnumber(rot) then error("5th arg(rotation): expected number, got "..type(group)) end
+
+    local tbl = rotate_vector_uv(bl,rot)
+    local ttl = rotate_vector_uv(tl,rot)
+    local ttr = rotate_vector_uv(tr,rot)
+
     local n = vector.cross(vector.subtract(bl,tl),vector.subtract(bl,tr))
+
     add_triangle(
         tl.x, tl.y, tl.z,
         bl.x, bl.y, bl.z,
@@ -64,20 +81,20 @@ function common.tri(bl,tl,tr,group)
         n.x, n.y, n.z,
         n.x, n.y, n.z,
         n.x, n.y, n.z,
-        tl.tx, tl.ty,
-        bl.tx, bl.ty,
-        tr.tx, tr.ty,
+        ttl.tx, ttl.ty,
+        tbl.tx, tbl.ty,
+        ttr.tx, ttr.ty,
         group
     )
 end
 
-function common.rect(bl, tl, tr, group)
+function common.rect(bl, tl, tr, group, rot)
     validate_vector(bl)
     validate_vector(tl)
     validate_vector(tr)
     local br = vector.add(vector.subtract(bl,tl),tr)
 
-    common.quad(bl,tl,tr,br,group)
+    common.quad(bl,tl,tr,br,group,rot)
 end
 
 function common.axis_aligned_rectangular_prism(middle, dimensions, tesselated, g1, g2, g3, g4, g5, g6)

@@ -7,7 +7,13 @@ local function reg(name)
         mesh = name..".obj",
         paramtype2 = "facedir",
         paramtype = "light",
-        tiles = {"top.png","bottom.png", "left.png", "right.png","front.png","back.png"},
+        
+        tiles = {{name="top.png",   backface_culling=true},
+                 {name="bottom.png",backface_culling=true},
+                 {name="right.png", backface_culling=true},
+                 {name="left.png",  backface_culling=true},
+                 {name="back.png",  backface_culling=true},
+                 {name="front.png", backface_culling=true}},
         groups = { oddly_breakable_by_hand=3 },
     })
 end
@@ -56,3 +62,4 @@ reg("c1_2r")
 reg("c1_3")
 reg("c1_3r")
 reg("c1_4")
+reg("wall")
