@@ -106,7 +106,7 @@ function curve3d.point_curve_open(left_point_in, right_in, bottomh, toph, bottom
     local tx_offset = left.x
     local ty_offset = left.z
     left.y = toph
-
+    
     for i=1,#right,1 do
         right[i].y = toph
         right[i].tx = right[i].x - tx_offset
@@ -150,8 +150,6 @@ function curve3d.point_curve_closed(left_point_in, right_in, bottomh, toph, bott
     shapes.common.quad(bl,tl,tr,br,groups[6], rotations[6])
 
     if name ~= "no_export" then export_mesh(name) end
-    print(shapes.util.inspect(groups))
-    print(shapes.util.inspect(rotations))
 end
 
 return curve3d

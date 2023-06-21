@@ -10,7 +10,6 @@ local rotate_vector_uv = shapes.util.rotate_vector_uv
 
 --Single normal used for all pieces, since it's flat
 function curve2d.corner_curve_c_clockwise(corner, segments, normal, group, rot)
-    print("corner_curve_c_clockwise",group, rot)
     ---Validation---
     if not istable(segments) then error("Segements is not a table") end
     if #segments < 2 then error("Segements has fewer than 2 points") end
@@ -49,7 +48,6 @@ end
 
 --Single normal used for all pieces
 function curve2d.corner_curve_clockwise(corner, segments, normal, group, rot)
-    print("corner_curve_clockwise",group, rot)
     ---Validation---
     if not istable(segments) then error("Segements is not a table") end
     if #segments < 2 then error("Segements has fewer than 2 points") end
@@ -87,7 +85,6 @@ end
 
 --These segements shouldn't cross... and start at the front and work their way backwards (z to -z)
 function curve2d.curve_segements(left_segment, right_segment, normal, group, rot)
-    print("curve_segements",group, rot)
     ---Validation---
     local function validate_segments(seg)
         if not istable(seg) then error("Segment is not a table") end
@@ -117,9 +114,7 @@ function curve2d.curve_segements(left_segment, right_segment, normal, group, rot
 end
 
 function curve2d.wall(segments, height, texHeight, group, rot)
-    print("wall",group, rot)
     rot = rot or 1
-    print(group, rot)
     ---Validation---
     if not istable(segments) then error("Segements is not a table") end
     if #segments < 2 then error("Segements has fewer than 2 points") end
