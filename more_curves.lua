@@ -96,7 +96,7 @@ curve = p_manip.multiply(curve, v(1,1,-1,1,1,1,1,1))
 curve = p_manip.add(curve, v3(-0.5,-0.5,0.5))
 calc_tx(curve)
 
-local groups_b = {3,4,5,6,1,2}
+local groups_b = {5,6,4,3,1,2}
 rotations = {8,2,1,4,2,4}
 shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50,-0.25, 0.00, 0.25, groups_b, rotations, "models/b_1.obj")
 shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50, 0.00, 0.00, 0.50, groups_b, rotations, "models/b_2.obj")
@@ -440,113 +440,146 @@ local curve_CR= function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
     export_mesh(name)
 end
 
--- 1 = top
--- 2 = bottom
--- 3 = right
--- 4 = left
--- 5 = back
--- 6 = front
 local groups_CR = {6,5,2,4,3,1}
 rotations = {7,3,4,4,1,2}
 curve_CR(-0.50,-0.25, 0.00, 0.25, groups_CR, rotations, "models/c_1r.obj")
 curve_CR(-0.50, 0.00, 0.00, 0.50, groups_CR, rotations, "models/c_2r.obj")
 curve_CR(-0.50, 0.25, 0.00, 0.75, groups_CR, rotations, "models/c_3r.obj")
 
--- ----------------------------------------------------------------
--- ------------------------------Mesh C1---------------------------
--- -- Object C1
--- -- 1 nodes tall, 1 nodes wide
--- -- Bottom half of C
--- --  +----+
--- --  |     \
--- --  |      ^_
--- --  |        ^_
--- --  |          \
--- --  |           |
--- --  |            |
--- --  +------------+
--- ----------------------------------------------------------------
+----------------------------------------------------------------
+------------------------------Mesh C1---------------------------
+-- Object C1
+-- 1 nodes tall, 1 nodes wide
+-- Bottom half of C
+--  +----+
+--  |     \
+--  |      ^_
+--  |        ^_
+--  |          \
+--  |           |
+--  |            |
+--  +------------+
+----------------------------------------------------------------
 
--- local curve_C1= function(bottomh,toph,bottom_ty,top_ty,name)
---     reset_mesh()
---     local magic_number = (math.sqrt(2)-1)/2
---     --Calculate the top half of the curve
---     local curve = points.super_e_curve(math.pi/4-magic_number, math.pi/4, 3, 1.5, 1, 1, 1.71, 1.71)
---     curve = p_manip.multiply(curve, v(1,1,-1,1,1,1,0,0))
---     curve = p_manip.add(curve, v(-1.5,bottomh,0,0,0,0,0))
---     curve = p_manip.multiply(curve, v(1,1,1,-1,-1,-1,1,1))
---     curve = p_manip.func(curve, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,-v.nz+3), 0.5)) end)
---     curve = p_manip.multiply(curve, v(-1,1,-1,-1,1,1,1,1))
+local curve_C1= function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
+    reset_mesh()
+    local magic_number = (math.sqrt(2)-1)/2
+    --Calculate the top half of the curve
+    local curve = points.super_e_curve(math.pi/4-magic_number, math.pi/4, 3, 1.5, 1, 1, 1.71, 1.71)
+    curve = p_manip.multiply(curve, v(1,1,-1,1,1,1,0,0))
+    curve = p_manip.add(curve, v(-1.5,bottomh,0,0,0,0,0))
+    curve = p_manip.multiply(curve, v(1,1,1,-1,-1,-1,1,1))
+    curve = p_manip.func(curve, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,-v.nz+3), 0.5)) end)
+    curve = p_manip.multiply(curve, v(-1,1,-1,-1,1,1,1,1))
 
---     local other_half = points.super_e_curve(math.pi*0/4, math.pi*1/4, 5, 1.5, 1, 1, 1.71, 1.71)
---     other_half = p_manip.multiply(other_half, v(1,1,-1,1,1,1,0,0))
---     other_half = p_manip.add(other_half, v(-1.5,bottomh,0,0,0,0,0))
---     other_half = p_manip.reverse(other_half)
---     other_half = p_manip.func(other_half, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,-v.nz+1), 0.5)) end)
---     other_half = p_manip.add(other_half, v(1,0,0,0,0,0,0))
---     --combine the two
---     local full_curve = {}
---     full_curve[1] = shapes.util.copy(curve[1])
---     full_curve[2] = shapes.util.copy(curve[2])
---     for i=1,5,1 do
---         full_curve[i+2] = shapes.util.copy(other_half[i])
---     end
---     full_curve = p_manip.reverse(full_curve)
+    local other_half = points.super_e_curve(math.pi*0/4, math.pi*1/4, 5, 1.5, 1, 1, 1.71, 1.71)
+    other_half = p_manip.multiply(other_half, v(1,1,-1,1,1,1,0,0))
+    other_half = p_manip.add(other_half, v(-1.5,bottomh,0,0,0,0,0))
+    other_half = p_manip.reverse(other_half)
+    other_half = p_manip.func(other_half, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,-v.nz+1), 0.5)) end)
+    other_half = p_manip.add(other_half, v(1,0,0,0,0,0,0))
+    --combine the two
+    local full_curve = {}
+    full_curve[1] = shapes.util.copy(curve[1])
+    full_curve[2] = shapes.util.copy(curve[2])
+    for i=1,5,1 do
+        full_curve[i+2] = shapes.util.copy(other_half[i])
+    end
+    full_curve = p_manip.reverse(full_curve)
 
---     local point = v3(-0.5, bottomh, 0.5)
+    local function calc_tx(seg)
+        points.validate_segment(seg)
+        for i=1,#seg,1 do
+            seg[i].tx = (seg[i].z+0.5)
+        end
+    end
+    calc_tx(full_curve)
 
---     shapes.curve3d.point_curve_open(point, full_curve, bottomh, toph, bottom_ty, top_ty, {1,2,3,4,5,6}, nil, "no_export") --right curve
---     local endp = full_curve[#full_curve]
---     shapes.curve3d.point_curve_open(point, {v(endp.x, bottomh, endp.z, 0, 0, 1, 0.5+endp.x,0), v(-0.5,bottomh,-0.5, 0, 0, 1, 1, 0)}, bottomh, toph, bottom_ty, top_ty, {1,2,3,6,5,4}, nil, "no_export") --back
---     shapes.curve2d.wall({ v(-0.5,bottomh,0.5,0,0,1,0,0), v(0.5,bottomh,0.5,0,0,1,1,0) }, toph-bottomh, top_ty, 5, 1) -- front
---     shapes.curve2d.wall({ v(-0.5,bottomh,-0.5,-1,0,0,0,0), v(-0.5,bottomh,0.5,-1,0,0,1,0) }, toph-bottomh, top_ty, 3, 1) -- left
+    local point = v3(-0.5, bottomh, 0.5)
 
---     export_mesh(name)
--- end
+    shapes.curve3d.point_curve_open(point, full_curve, bottomh, toph, bottom_ty, top_ty, groups, rotations, "no_export") --right curve
+    local endp = full_curve[#full_curve]
+    shapes.curve3d.point_curve_open(point, {v(endp.x, bottomh, endp.z, 0, 0, 1, 0.5+endp.x,0), v(-0.5,bottomh,-0.5, 0, 0, 1, 1, 0)}, bottomh, toph, bottom_ty, top_ty, groups, rotations, "no_export") --back
+    shapes.curve2d.wall({ v(-0.5,bottomh,0.5,0,0,1,0,0), v(0.5,bottomh,0.5,0,0,1,1,0) }, toph-bottomh, top_ty, groups[6], rotations[6]) -- front
+    shapes.curve2d.wall({ v(-0.5,bottomh,-0.5,-1,0,0,0,0), v(-0.5,bottomh,0.5,-1,0,0,1,0) }, toph-bottomh, top_ty, groups[3], rotations[3]) -- left
 
--- curve_C1(-0.50,-0.25, 0.00, 0.25, "models/c1_1.obj")
--- curve_C1(-0.50, 0.00, 0.00, 0.50, "models/c1_2.obj")
--- curve_C1(-0.50, 0.25, 0.25, 0.75, "models/c1_3.obj")
--- curve_C1(-0.50, 0.50, 0.00, 1.00, "models/c1_4.obj")
+    export_mesh(name)
+end
 
--- local curve_C1R= function(bottomh,toph,bottom_ty,top_ty,name)
---     reset_mesh()
---     local magic_number = (math.sqrt(2)-1)/2
---     --Calculate the top half of the curve
---     local curve = points.super_e_curve(math.pi/4-magic_number, math.pi/4, 3, 1.5, 1, 1, 1.71, 1.71)
---     curve = p_manip.multiply(curve, v(1,1,-1,1,1,1,0,0))
---     curve = p_manip.add(curve, v(-1.5,bottomh,0,0,0,0,0))
---     curve = p_manip.multiply(curve, v(1,1,1,-1,-1,-1,1,1))
---     curve = p_manip.func(curve, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,-v.nz+3), 0.5)) end)
---     curve = p_manip.multiply(curve, v(-1,1,-1,-1,1,1,1,1))
+local groups_C1 = {6,5,1,3,4,2}
+rotations = {7,3,4,6,1,2}
+curve_C1(-0.50,-0.25, 0.00, 0.25, groups_C1, rotations, "models/c1_1.obj")
+curve_C1(-0.50, 0.00, 0.00, 0.50, groups_C1, rotations, "models/c1_2.obj")
+curve_C1(-0.50, 0.25, 0.00, 0.75, groups_C1, rotations, "models/c1_3.obj")
+curve_C1(-0.50, 0.50, 0.00, 1.00, groups_C1, rotations, "models/c1_4.obj")
 
---     local other_half = points.super_e_curve(math.pi*0/4, math.pi*1/4, 5, 1.5, 1, 1, 1.71, 1.71)
---     other_half = p_manip.multiply(other_half, v(1,1,-1,1,1,1,0,0))
---     other_half = p_manip.add(other_half, v(-1.5,bottomh,0,0,0,0,0))
---     other_half = p_manip.reverse(other_half)
---     other_half = p_manip.func(other_half, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,-v.nz+1), 0.5)) end)
---     other_half = p_manip.add(other_half, v(1,0,0,0,0,0,0))
---     --combine the two
---     local full_curve = {}
---     full_curve[1] = shapes.util.copy(curve[1])
---     full_curve[2] = shapes.util.copy(curve[2])
---     for i=1,5,1 do
---         full_curve[i+2] = shapes.util.copy(other_half[i])
---     end
---     full_curve = p_manip.multiply(full_curve, v(-1,1,1,-1,1,1,1,1))
---     p_manip.dump(full_curve)
+local curve_C1R= function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
+    reset_mesh()
+    local magic_number = (math.sqrt(2)-1)/2
+    --Calculate the top half of the curve
+    local curve = points.super_e_curve(math.pi/4-magic_number, math.pi/4, 3, 1.5, 1, 1, 1.71, 1.71)
+    curve = p_manip.multiply(curve, v(1,1,-1,1,1,1,0,0))
+    curve = p_manip.add(curve, v(-1.5,bottomh,0,0,0,0,0))
+    curve = p_manip.multiply(curve, v(1,1,1,-1,-1,-1,1,1))
+    curve = p_manip.func(curve, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,-v.nz+3), 0.5)) end)
+    curve = p_manip.multiply(curve, v(-1,1,-1,-1,1,1,1,1))
 
---     local point = v3(0.5, bottomh, 0.5)
+    local other_half = points.super_e_curve(math.pi*0/4, math.pi*1/4, 5, 1.5, 1, 1, 1.71, 1.71)
+    other_half = p_manip.multiply(other_half, v(1,1,-1,1,1,1,0,0))
+    other_half = p_manip.add(other_half, v(-1.5,bottomh,0,0,0,0,0))
+    other_half = p_manip.reverse(other_half)
+    other_half = p_manip.func(other_half, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,-v.nz+1), 0.5)) end)
+    other_half = p_manip.add(other_half, v(1,0,0,0,0,0,0))
+    --combine the two
+    local full_curve = {}
+    full_curve[1] = shapes.util.copy(curve[1])
+    full_curve[2] = shapes.util.copy(curve[2])
+    for i=1,5,1 do
+        full_curve[i+2] = shapes.util.copy(other_half[i])
+    end
+    full_curve = p_manip.multiply(full_curve, v(-1,1,1,-1,1,1,1,1))
 
---     shapes.curve3d.point_curve_open(point, full_curve, bottomh, toph, bottom_ty, top_ty, {1,2,3,4,5,6}, nil, "no_export") --left curve
---     local startp = full_curve[1]
---     shapes.curve3d.point_curve_open(point, {v(0.5,bottomh,-0.5, 0, 0, 1, 0, 0), v(startp.x, bottomh, startp.z, 0, 0, 1, startp.x,0)}, bottomh, toph, bottom_ty, top_ty, {1,2,3,6,5,4}, nil, "no_export") --back
---     shapes.curve2d.wall({ v(-0.5,bottomh,0.5,0,0,1,0,0), v(0.5,bottomh,0.5,0,0,1,1,0) }, toph-bottomh, top_ty, 5) -- front
---     shapes.curve2d.wall({v(0.5,bottomh,0.5,1,0,0,0,0), v(0.5,bottomh,-0.5,1,0,0,1,0) }, toph-bottomh, top_ty, 4) -- right
+    local function calc_tx(seg)
+        points.validate_segment(seg)
+        for i=1,#seg,1 do
+            seg[i].tx = (seg[i].z+0.5)
+        end
+    end
+    calc_tx(full_curve)
 
---     export_mesh(name)
--- end
+    local point = v3(0.5, bottomh, 0.5)
 
--- curve_C1R(-0.50,-0.25, 0.00, 0.25, "models/c1_1r.obj")
--- curve_C1R(-0.50, 0.00, 0.00, 0.50, "models/c1_2r.obj")
--- curve_C1R(-0.50, 0.25, 0.25, 0.75, "models/c1_3r.obj")
+    shapes.curve3d.point_curve_open(point, full_curve, bottomh, toph, bottom_ty, top_ty, groups, rotations, "no_export") --left curve
+    local startp = full_curve[1]
+    shapes.curve3d.point_curve_open(point, {v(0.5,bottomh,-0.5, 0, 0, 1, 0, 0), v(startp.x, bottomh, startp.z, 0, 0, 1, startp.x,0)}, bottomh, toph, bottom_ty, top_ty, groups, rotations, "no_export") --back
+    shapes.curve2d.wall({ v(-0.5,bottomh,0.5,0,0,1,0,0), v(0.5,bottomh,0.5,0,0,1,1,0) }, toph-bottomh, top_ty, groups[6], rotations[6]) -- front
+    shapes.curve2d.wall({v(0.5,bottomh,0.5,1,0,0,0,0), v(0.5,bottomh,-0.5,1,0,0,1,0) }, toph-bottomh, top_ty, groups[3], rotations[3]) -- right
+
+    export_mesh(name)
+end
+
+-- 1 = top
+-- 2 = bottom
+-- 3 = right
+-- 4 = left
+-- 5 = back
+-- 6 = front
+local groups_C1R = {6,5,1,4,3,2}
+rotations = {7,3,2,4,1,4}
+curve_C1R(-0.50,-0.25, 0.00, 0.25, groups_C1R, rotations, "models/c1_1r.obj")
+curve_C1R(-0.50, 0.00, 0.00, 0.50, groups_C1R, rotations, "models/c1_2r.obj")
+curve_C1R(-0.50, 0.25, 0.00, 0.75, groups_C1R, rotations, "models/c1_3r.obj")
+
+----------------------------------------------------------------
+------------------------------Mesh D----------------------------
+-- Object D
+-- ~1.2 nodes tall, ~1.5 nodes wide
+-- Middle of 2 As coming together
+--           __--^--__
+--      _--^^         ^^--_
+--     ^_                 _^   
+--       ^_             _^ 
+--         ^_         _^  
+--           ^_ _^_ _^
+--             +   +
+----------------------------------------------------------------
