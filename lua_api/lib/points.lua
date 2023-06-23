@@ -11,6 +11,7 @@ function points.superellipse_polar_point(theta, radius, a, b, m, n)
     local c = math.cos(theta)
     local d = math.sin(theta)
     local x = a * math.pow( math.abs( c ), 2 / m ) * radius
+    -- a = 1, b = 1, 
     if c < 0 then
         x = -x
     end

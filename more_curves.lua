@@ -583,3 +583,68 @@ curve_C1R(-0.50, 0.25, 0.00, 0.75, groups_C1R, rotations, "models/c1_3r.obj")
 --           ^_ _^_ _^
 --             +   +
 ----------------------------------------------------------------
+
+local curve_D = function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
+
+    --function points.super_e_curve(starting_theta, ending_theta, precision, radius, a, b, m, n)
+    --x = a * math.pow( math.abs( c ), 2 / m ) * radius
+    --local magic_number = math.acos(math.pow( (0.5)/1.5 , 1.71/2 ))
+    local magic_number_outer = 1.262
+    local outer = points.super_e_curve(math.pi*1/4, magic_number_outer, 5, 1.5, 1, 1, 1.71, 1.71)
+    local outer = p_manip.multiply(outer, v(1,1,1,-1,-1,-1,1,1))
+    outer = p_manip.func(outer, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,v.nz), 0.5)) end)
+    outer = p_manip.add(outer, v(-0.5,0,-1.5,0,0,0,0))
+    outer = p_manip.multiply(outer,v(1,1,-1,1,1,-1,1,1))
+    local outer2 = p_manip.multiply(outer,v(-1,1,1,-1,1,1,1,1))
+    local outer2 = p_manip.reverse(outer2)
+
+    for i=2,#outer2,1 do
+        outer[#outer+1] = shapes.util.copy(outer2[i])
+    end
+
+    local magic_number_inner = 0.969
+    local inner = points.super_e_curve(math.pi*1/4, magic_number_inner, 5, 1.5, 1, 1, 1.71, 1.71)
+    inner = p_manip.func(inner, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,v.nz), 0.5)) end)
+    inner = p_manip.add(inner, v(-0.5,0,-1.5,0,0,0,0))
+    local inner2 = p_manip.multiply(inner,v(-1,1,1,-1,1,1,1,1))
+    local inner2 = p_manip.reverse(inner2)
+
+    for i=2,#inner2,1 do
+        inner[#inner+1] = shapes.util.copy(inner2[i])
+    end
+
+    inner = p_manip.reverse(inner) -- for correct triangle winding
+
+    -- for i=1,#inner,1 do
+    --     print(shapes.util.round(inner[i].x,3) .. "," ..shapes.util.round(-inner[i].z,3))
+    -- end
+
+    -- for i=1,#outer,1 do
+    --     print(shapes.util.round(outer[i].x,3) .. "," ..shapes.util.round(outer[i].z,3))
+    -- end
+
+    local function calc_txy(seg)
+        points.validate_segment(seg)
+        for i=1,#seg,1 do
+            seg[i].tx = seg[i].x + 0.5
+            seg[i].ty = seg[i].z + 0.5
+        end
+    end
+    calc_txy(inner)
+    calc_txy(outer)
+
+    shapes.curve3d.curve2_closed(inner,outer,bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
+end
+
+-- 1 = top
+-- 2 = bottom
+-- 3 = right
+-- 4 = left
+-- 5 = back
+-- 6 = front
+local groups_D = {1,2,3,4,5,6}
+rotations = {1,1,1,1,1,1}
+curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/d_1.obj")
+curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/d_2.obj")
+curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/d_3.obj")
+curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/d_4.obj")
