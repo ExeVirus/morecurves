@@ -614,26 +614,98 @@ local curve_D = function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
     end
 
     inner = p_manip.reverse(inner) -- for correct triangle winding
-
-    -- for i=1,#inner,1 do
-    --     print(shapes.util.round(inner[i].x,3) .. "," ..shapes.util.round(-inner[i].z,3))
-    -- end
-
-    -- for i=1,#outer,1 do
-    --     print(shapes.util.round(outer[i].x,3) .. "," ..shapes.util.round(outer[i].z,3))
-    -- end
+    inner = p_manip.multiply(inner,v(1,1,-1,1,1,-1,1,1))
 
     local function calc_txy(seg)
         points.validate_segment(seg)
         for i=1,#seg,1 do
-            seg[i].tx = seg[i].x + 0.5
-            seg[i].ty = seg[i].z + 0.5
+            seg[i].tx = seg[i].x
+            seg[i].ty = seg[i].z
         end
     end
     calc_txy(inner)
     calc_txy(outer)
 
-    shapes.curve3d.curve2_closed(inner,outer,bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
+    for i=1,#inner,1 do
+        inner[i].y = bottomh
+        inner[i].ty = bottom_ty
+    end
+
+    for i=1,#outer,1 do
+        outer[i].y = bottomh
+        outer[i].ty = bottom_ty
+    end
+
+    local function curve2_closed(left_in, right_in, bottomh, toph, bottom_ty, top_ty, groups, rotations, name)
+        rotations = rotations or {1,1,1,1,1,1}
+        groups = groups or {3,4,5,6,1,2}
+
+        if name ~= "no_export" then reset_mesh() end
+        local left = shapes.util.copy(left_in)
+        local right = shapes.util.copy(right_in)
+
+        shapes.curve2d.wall(left, toph-bottomh, top_ty, groups[1], rotations[1])
+        shapes.curve2d.wall(right, toph-bottomh, top_ty, groups[2], rotations[2])
+
+        --calculate the Bottom and Top
+        local bl, tl, tr, br = 0,0,0,0
+        bl = vector.new(left[#left].x,bottomh,left[#left].z,0,0,0,0,bottom_ty)
+        br = vector.new(right[1].x,bottomh,right[1].z,0,0,0,1,bottom_ty)
+        tr = vector.new(br); tr.y = toph; tr.ty = top_ty
+        tl = vector.new(bl); tl.y = toph; tl.ty = top_ty
+        shapes.common.quad(bl,tl,tr,br,groups[3], rotations[3])
+
+        bl = vector.new(left[1].x,bottomh,left[1].z,0,0,0,1,bottom_ty)
+        br = vector.new(right[#right].x,bottomh,right[#right].z,0,0,0,0,bottom_ty)
+        tr = shapes.vector.new(br); tr.y = toph; tr.ty = top_ty
+        tl = shapes.vector.new(bl); tl.y = toph; tl.ty = top_ty
+        shapes.common.quad(br,tr,tl,bl,groups[4], rotations[4])
+
+        --Calculate the front and back
+        --reorder
+        local rev = {}
+        for i=#left, 1, -1 do
+            rev[#rev+1] = left[i]
+        end
+        left = rev
+
+        --Front
+        local tx_offset = left[1].x -0.646
+        local ty_offset = left[1].z + 0.649
+        for i=1,#left,1 do
+            left[i].y = toph
+            left[i].tx = (left[i].x - tx_offset)
+            left[i].ty = -(left[i].z - ty_offset)
+        end
+
+        for i=1,#right,1 do
+            right[i].y = toph
+            right[i].tx = (right[i].x - tx_offset)
+            right[i].ty = -(right[i].z - ty_offset)
+        end
+        shapes.curve2d.curve_segements(left, right, vector.new(0,1,0,0,0,0,0,0), groups[5], rotations[5])
+
+        --Back
+        local tx_offset = right[1].x - 0.354
+        local ty_offset = right[1].z + 0.356
+        for i=1,#left,1 do
+            left[i].y = bottomh
+            left[i].tx = left[i].x - tx_offset
+            left[i].ty = left[i].z - ty_offset
+        end
+
+        for i=1,#right,1 do
+            right[i].y = bottomh
+            right[i].tx = right[i].x - tx_offset
+            right[i].ty = right[i].z - ty_offset
+        end
+
+        shapes.curve2d.curve_segements(right, left, vector.new(0,-1,0,0,0,0,0,0), groups[6], rotations[6])
+
+        if name ~= "no_export" then export_mesh(name) end
+    end
+
+    curve2_closed(inner,outer,bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
 end
 
 -- 1 = top
@@ -642,8 +714,8 @@ end
 -- 4 = left
 -- 5 = back
 -- 6 = front
-local groups_D = {1,2,3,4,5,6}
-rotations = {1,1,1,1,1,1}
+local groups_D = {4,3,1,2,5,6}
+rotations = {3,5,2,4,1,3}
 curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/d_1.obj")
 curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/d_2.obj")
 curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/d_3.obj")
