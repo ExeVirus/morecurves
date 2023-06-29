@@ -720,3 +720,44 @@ curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/d_1.obj")
 curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/d_2.obj")
 curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/d_3.obj")
 curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/d_4.obj")
+
+
+------------------------------Mesh _D----------------------------
+-- Object _D
+-- ~0.8 nodes tall, 1 node wide
+-- inner arch of of 2 As coming together
+--  
+--       _-^-_
+--     _^     ^_
+--    /         \
+--   /           \
+--   |           |
+--   +-----------+
+--
+----------------------------------------------------------------
+
+local arch_curve_D = function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
+    local magic_number = 0.9694
+    local right = points.super_e_curve(math.pi*0/4, magic_number, 5, 1.5, 1, 1, 1.71, 1.71)
+    right = p_manip.func(right, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,v.nz), 0.5)) end)
+    right = p_manip.add(right, v(-0.5,0,-0.5,0,0,0,0))
+    local left = p_manip.multiply(right, v(-1,0,0,0,0,0,0))
+
+    for i=2,#left,1 do
+        print(right[i].x .. ", " .. right[i].z)
+    end
+
+end
+
+-- 1 = top
+-- 2 = bottom
+-- 3 = right
+-- 4 = left
+-- 5 = back
+-- 6 = front
+local groups_D = {4,3,1,2,5,6}
+rotations = {3,5,2,4,1,3}
+--arch_curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/_d_1.obj")
+--arch_curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/_d_2.obj")
+--arch_curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/_d_3.obj")
+arch_curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/_d_4.obj")
