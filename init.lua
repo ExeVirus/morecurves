@@ -1,5 +1,13 @@
-local function reg(name)
+local function reg(name, collision_box)
     minetest.log("morecurves:"..name)
+    local collisionbox = { type = "regular" }
+    if(collision_box ~= nil) then
+        collisionbox = {
+            type = "fixed",
+            fixed = collision_box
+        }
+    end
+    minetest.log(dump(collisionbox))
     minetest.register_node("morecurves:"..name,
     {
         description = name,
@@ -7,6 +15,8 @@ local function reg(name)
         mesh = name..".obj",
         paramtype2 = "facedir",
         paramtype = "light",
+        collision_box = collisionbox,
+        selection_box = collisionbox,
         
         tiles = {{name="top.png",   backface_culling=true},
                  {name="bottom.png",backface_culling=true},
@@ -47,7 +57,7 @@ reg("af_4")
 reg("b_1")
 reg("b_2")
 reg("b_3")
-reg("b_4")
+reg("b_4", {-0.1,-0.1,-0.1,0.1,0.1,0.1})
 reg("c_1")
 reg("c_1r")
 reg("c_2")
