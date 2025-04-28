@@ -173,10 +173,10 @@ end
 
 local groups_a1 = {5,6,2,3,4,1}
 rotations = {6,4,3,6,2,2}
-curve_A1(-0.50,-0.25, 0.00, 0.25, groups_a1, rotations, "models/a1_1.obj")
-curve_A1(-0.50, 0.00, 0.00, 0.50, groups_a1, rotations, "models/a1_2.obj")
-curve_A1(-0.50, 0.25, 0.00, 0.75, groups_a1, rotations, "models/a1_3.obj")
-curve_A1(-0.50, 0.50, 0.00, 1.00, groups_a1, rotations, "models/a1_4.obj")
+-- curve_A1(-0.50,-0.25, 0.00, 0.25, groups_a1, rotations, "models/a1_1.obj")
+-- curve_A1(-0.50, 0.00, 0.00, 0.50, groups_a1, rotations, "models/a1_2.obj")
+-- curve_A1(-0.50, 0.25, 0.00, 0.75, groups_a1, rotations, "models/a1_3.obj")
+-- curve_A1(-0.50, 0.50, 0.00, 1.00, groups_a1, rotations, "models/a1_4.obj")
 
 ----------------------------------------------------------------
 ------------------------------Mesh A2---------------------------
@@ -221,10 +221,10 @@ end
 
 local groups_a2 = {6,5,1,3,1,4}
 rotations = {5,1,4,2,2,1}
-curve_A2(-0.50,-0.25, 0.00, 0.25, groups_a2, rotations, "models/a2_1.obj")
-curve_A2(-0.50, 0.00, 0.00, 0.50, groups_a2, rotations, "models/a2_2.obj")
-curve_A2(-0.50, 0.25, 0.00, 0.75, groups_a2, rotations, "models/a2_3.obj")
-curve_A2(-0.50, 0.50, 0.00, 1.00, groups_a2, rotations, "models/a2_4.obj")
+-- curve_A2(-0.50,-0.25, 0.00, 0.25, groups_a2, rotations, "models/a2_1.obj")
+-- curve_A2(-0.50, 0.00, 0.00, 0.50, groups_a2, rotations, "models/a2_2.obj")
+-- curve_A2(-0.50, 0.25, 0.00, 0.75, groups_a2, rotations, "models/a2_3.obj")
+-- curve_A2(-0.50, 0.50, 0.00, 1.00, groups_a2, rotations, "models/a2_4.obj")
 
 local curve_A2R = function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
     groups = groups or {1,2,3,4,5,6}
@@ -264,9 +264,9 @@ end
 -- 6 = front
 local groups_a2r = {6,5,4,3,4,1}
 rotations = {6,4,1,4,3,2}
-curve_A2R(-0.50,-0.25, 0.00, 0.25, groups_a2r, rotations, "models/a2_1r.obj")
-curve_A2R(-0.50, 0.00, 0.00, 0.50, groups_a2r, rotations, "models/a2_2r.obj")
-curve_A2R(-0.50, 0.25, 0.00, 0.75, groups_a2r, rotations, "models/a2_3r.obj")
+-- curve_A2R(-0.50,-0.25, 0.00, 0.25, groups_a2r, rotations, "models/a2_1r.obj")
+-- curve_A2R(-0.50, 0.00, 0.00, 0.50, groups_a2r, rotations, "models/a2_2r.obj")
+-- curve_A2R(-0.50, 0.25, 0.00, 0.75, groups_a2r, rotations, "models/a2_3r.obj")
 
 ----------------------------------------------------------------
 ------------------------------Mesh AF---------------------------
@@ -508,10 +508,10 @@ end
 
 local groups_C1 = {6,5,1,3,4,2}
 rotations = {7,3,4,6,1,2}
-curve_C1(-0.50,-0.25, 0.00, 0.25, groups_C1, rotations, "models/c1_1.obj")
-curve_C1(-0.50, 0.00, 0.00, 0.50, groups_C1, rotations, "models/c1_2.obj")
-curve_C1(-0.50, 0.25, 0.00, 0.75, groups_C1, rotations, "models/c1_3.obj")
-curve_C1(-0.50, 0.50, 0.00, 1.00, groups_C1, rotations, "models/c1_4.obj")
+-- curve_C1(-0.50,-0.25, 0.00, 0.25, groups_C1, rotations, "models/c1_1.obj")
+-- curve_C1(-0.50, 0.00, 0.00, 0.50, groups_C1, rotations, "models/c1_2.obj")
+-- curve_C1(-0.50, 0.25, 0.00, 0.75, groups_C1, rotations, "models/c1_3.obj")
+-- curve_C1(-0.50, 0.50, 0.00, 1.00, groups_C1, rotations, "models/c1_4.obj")
 
 local curve_C1R= function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
     reset_mesh()
@@ -566,9 +566,9 @@ end
 -- 6 = front
 local groups_C1R = {6,5,1,4,3,2}
 rotations = {7,3,2,4,1,4}
-curve_C1R(-0.50,-0.25, 0.00, 0.25, groups_C1R, rotations, "models/c1_1r.obj")
-curve_C1R(-0.50, 0.00, 0.00, 0.50, groups_C1R, rotations, "models/c1_2r.obj")
-curve_C1R(-0.50, 0.25, 0.00, 0.75, groups_C1R, rotations, "models/c1_3r.obj")
+-- curve_C1R(-0.50,-0.25, 0.00, 0.25, groups_C1R, rotations, "models/c1_1r.obj")
+-- curve_C1R(-0.50, 0.00, 0.00, 0.50, groups_C1R, rotations, "models/c1_2r.obj")
+-- curve_C1R(-0.50, 0.25, 0.00, 0.75, groups_C1R, rotations, "models/c1_3r.obj")
 
 ----------------------------------------------------------------
 ------------------------------Mesh D----------------------------
@@ -738,15 +738,30 @@ curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/d_4.obj")
 ----------------------------------------------------------------
 
 local arch_curve_D = function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
+    reset_mesh()
     local magic_number = 0.9694
     local right = points.super_e_curve(math.pi*0/4, magic_number, 5, 1.5, 1, 1, 1.71, 1.71)
     right = p_manip.func(right, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,v.nz), 0.5)) end)
-    right = p_manip.add(right, v(-0.5,0,-0.5,0,0,0,0))
-    local left = p_manip.multiply(right, v(-1,0,1,0,0,0,0))
-
-    for i=1,#right,1 do
-        print(right[i].x .. ", " .. right[i].z .. ", " .. right[i].nx)
+    right = p_manip.add(right, v(-0.5,bottomh,-0.5,0,0,0,0))
+    local left = p_manip.reverse(p_manip.multiply(right, v(-1,1,1,0,0,0,0,0)))
+    local full_curve = shapes.util.copy(right)
+    for i=2,5,1 do
+        full_curve[#full_curve+1] = shapes.util.copy(left[i])
     end
+    full_curve = p_manip.multiply(full_curve, v(1,1,1,1,1,1,1,1))
+    full_curve = p_manip.reverse(full_curve)
+
+    -- curve3d.point_curve_closed(left_point_in, right_in, bottomh, toph, bottom_ty, top_ty, groups, rotations, name)
+    shapes.curve3d.point_curve_open(v3(0.0,bottomh,-0.5), full_curve, bottomh, toph, bottom_ty, top_ty, groups, rotations, "no_export")
+
+    local bl, tl, tr, br = 0,0,0,0
+    bl = vector.new(0.5  ,bottomh ,-0.5 ,0  ,0 ,-1  ,0  ,0)
+    br = vector.new(-0.5 ,bottomh ,-0.5 ,0  ,0 ,-1  ,1  ,0)
+    tr = vector.new(-0.5 ,toph    ,-0.5 ,0  ,0 ,-1  ,0  ,1)
+    tl = vector.new(0.5  ,toph    ,-0.5 ,0  ,0 ,-1  ,1  ,1)
+    shapes.common.quad(bl,tl,tr,br,2,4)
+    
+    export_mesh(name)
 end
 
 -- 1 = top
@@ -757,7 +772,7 @@ end
 -- 6 = front
 local groups_D = {4,3,1,2,5,6}
 rotations = {3,5,2,4,1,3}
---arch_curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/_d_1.obj")
---arch_curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/_d_2.obj")
---arch_curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/_d_3.obj")
+arch_curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/_d_1.obj")
+arch_curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/_d_2.obj")
+arch_curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/_d_3.obj")
 arch_curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/_d_4.obj")
