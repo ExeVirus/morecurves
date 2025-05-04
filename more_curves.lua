@@ -743,23 +743,37 @@ local arch_curve_D = function(bottomh,toph,bottom_ty,top_ty,groups,rotations,nam
     local right = points.super_e_curve(math.pi*0/4, magic_number, 5, 1.5, 1, 1, 1.71, 1.71)
     right = p_manip.func(right, function(v) return vector.add(v,vector.multiply(v3(v.nx,0,v.nz), 0.5)) end)
     right = p_manip.add(right, v(-0.5,bottomh,-0.5,0,0,0,0))
-    local left = p_manip.reverse(p_manip.multiply(right, v(-1,1,1,0,0,0,0,0)))
+
+    local function calc_tx(seg)
+        points.validate_segment(seg)
+        local tx = 0.0
+        seg[1].tx = tx
+        for i=2,#seg,1 do
+            tx = tx + vector.distance(seg[i],seg[i-1])
+            seg[i].tx = tx
+        end
+    end
+    calc_tx(right)
+
+    local left = p_manip.reverse(p_manip.multiply(right, v(-1,1,1,-1,1,1,1,1)))
     local full_curve = shapes.util.copy(right)
     for i=2,5,1 do
         full_curve[#full_curve+1] = shapes.util.copy(left[i])
     end
-    full_curve = p_manip.multiply(full_curve, v(1,1,1,1,1,1,1,1))
     full_curve = p_manip.reverse(full_curve)
-
-    -- curve3d.point_curve_closed(left_point_in, right_in, bottomh, toph, bottom_ty, top_ty, groups, rotations, name)
     shapes.curve3d.point_curve_open(v3(0.0,bottomh,-0.5), full_curve, bottomh, toph, bottom_ty, top_ty, groups, rotations, "no_export")
 
+    -- Add bottom
     local bl, tl, tr, br = 0,0,0,0
-    bl = vector.new(0.5  ,bottomh ,-0.5 ,0  ,0 ,-1  ,0  ,0)
-    br = vector.new(-0.5 ,bottomh ,-0.5 ,0  ,0 ,-1  ,1  ,0)
-    tr = vector.new(-0.5 ,toph    ,-0.5 ,0  ,0 ,-1  ,0  ,1)
-    tl = vector.new(0.5  ,toph    ,-0.5 ,0  ,0 ,-1  ,1  ,1)
-    shapes.common.quad(bl,tl,tr,br,2,4)
+    bl = vector.new(0.5  ,bottomh ,-0.5 ,0  ,0 ,-1  ,0  ,bottom_ty)
+    br = vector.new(-0.5 ,bottomh ,-0.5 ,0  ,0 ,-1  ,1  ,bottom_ty)
+    tr = vector.new(-0.5 ,toph    ,-0.5 ,0  ,0 ,-1  ,1  ,top_ty)
+    tl = vector.new(0.5  ,toph    ,-0.5 ,0  ,0 ,-1  ,0  ,top_ty)
+    shapes.common.quad(bl,tl,tr,br,2,1)
+
+    -- Add useless triangle because MT can't skip the first textrue
+    shapes.common.tri(bl,tl,tr,1,1)
+
     
     export_mesh(name)
 end
@@ -770,7 +784,7 @@ end
 -- 4 = left
 -- 5 = back
 -- 6 = front
-local groups_D = {4,3,1,2,5,6}
+local groups_D = {4,3,1,4,5,6}
 rotations = {3,5,2,4,1,3}
 arch_curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/_d_1.obj")
 arch_curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/_d_2.obj")

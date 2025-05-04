@@ -53,7 +53,7 @@ function common.quad(bl,tl,tr,br,group,rot)
         n.x, n.y, n.z,
         n.x, n.y, n.z,
         n.x, n.y, n.z,
-        tbr.tx, tbr.ty,        
+        tbr.tx, tbr.ty,
         ttr.tx, ttr.ty,
         tbl.tx, tbl.ty,
         group
