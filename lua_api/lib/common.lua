@@ -88,6 +88,44 @@ function common.tri(bl,tl,tr,group,rot)
     )
 end
 
+-- Automatically calculates texture coords, overwriting the provided bl,tl,tr,br
+-- using the given bl corner texture coords (tx, ty)
+function common.auto_quad(bl, tl, tr, br, tx, ty, group, rot)
+    -- Create copies so we don't modify the original vectors passed in
+    local bl, tl, tr, br = copy(bl), copy(tl), copy(tr), copy(br)
+
+    -- Assign the starting texture coordinate to the bottom-left vertex
+    bl.tx = tx
+    bl.ty = ty
+
+    -- Calculate the vectors representing the bottom and left edges in 3D space
+    local bottom_edge_vec = vector.subtract(br, bl)
+    local left_edge_vec = vector.subtract(tl, bl)
+
+    -- Calculate the 3D lengths of these edges.
+    -- vector.length returns lengths for position, normal, and texture components.
+    -- We only care about the positional length (the first return value) for UV mapping.
+    local bottom_edge_len, _, _ = vector.length(bottom_edge_vec)
+    local left_edge_len, _, _ = vector.length(left_edge_vec)
+
+    -- Calculate texture coordinates for the other vertices based on the edge lengths
+    -- Top Left (tl): Same U (tx) as bl, V (ty) increased by left edge length
+    tl.tx = bl.tx
+    tl.ty = bl.ty + left_edge_len
+
+    -- Bottom Right (br): U (tx) increased by bottom edge length, same V (ty) as bl
+    br.tx = bl.tx + bottom_edge_len
+    br.ty = bl.ty
+
+    -- Top Right (tr): U (tx) increased by bottom edge length, V (ty) increased by left edge length
+    tr.tx = bl.tx + bottom_edge_len
+    tr.ty = bl.ty + left_edge_len
+
+    -- Now that all vertices have calculated texture coordinates,
+    -- call the original quad function.
+    common.quad(bl, tl, tr, br, group, rot)
+end
+
 function common.rect(bl, tl, tr, group, rot)
     validate_vector(bl)
     validate_vector(tl)

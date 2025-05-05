@@ -723,7 +723,6 @@ curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/d_4.obj")
 
 
 ------------------------------Mesh _D----------------------------
--- NOTE: Not implemented due to registration limit concerns
 -- Object _D
 -- ~0.8 nodes tall, 1 node wide
 -- inner arch of of 2 As coming together
@@ -790,3 +789,56 @@ arch_curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/_d_1.obj")
 arch_curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/_d_2.obj")
 arch_curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/_d_3.obj")
 arch_curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/_d_4.obj")
+
+------------------------------Mesh Q----------------------------
+-- Object Q
+-- 45° rectangular prism, centered on standard node origin
+--
+--                _TL
+--             _-   \
+--          _-       \
+--       _-           \
+--    _-               TR
+--   BL             _-
+--    \          _-
+--     \      _-
+--      \  _-
+--       BR
+--
+----------------------------------------------------------------
+local rect_45 = function(bottomh,toph,name)
+    reset_mesh()
+
+    local s = 0.147
+    local l = 0.853
+
+    local bl  = vector.new(-l, bottomh, -s, 0, 0, 0, 0, 0)
+    local br  = vector.new(-s, bottomh, -l, 0, 0, 0, 0, 0)
+    local tl  = vector.new( s, bottomh,  l, 0, 0, 0, 0, 0)
+    local tr  = vector.new( l, bottomh,  s, 0, 0, 0, 0, 0)
+    local bl2 = vector.new(-l, toph,    -s, 0, 0, 0, 0, 0)
+    local br2 = vector.new(-s, toph,    -l, 0, 0, 0, 0, 0)
+    local tl2 = vector.new( s, toph,     l, 0, 0, 0, 0, 0)
+    local tr2 = vector.new( l, toph,     s, 0, 0, 0, 0, 0)
+
+    -- center the side textures on 0,0, so start at - [sqrt(2) - 1] / 2
+    shapes.common.auto_quad(bl2, br2, tr2, tl2, 0, -.207, 4, 4) -- top    - which is a side texture - left   tex
+    shapes.common.auto_quad( tr,  br,  bl,  tl, 0, -.207, 3, 1) -- bottom - which is a side texture - right  tex
+    shapes.common.auto_quad( bl,  br, br2, bl2, 0, 0.0,   1, 4) -- front  - which is a side texture - top    tex
+    shapes.common.auto_quad( tl, tl2, tr2,  tr, 0, 0.0,   2, 1) -- back   - which is a side texture - bottom tex
+    shapes.common.auto_quad( tl,  bl, bl2, tl2, 0, 0.0,   5, 3) -- left   - which is a side texture - front  tex
+    shapes.common.auto_quad( br,  tr, tr2, br2, 0, 0.0,   6, 3) -- right  - which is a side texture - back   tex
+
+    export_mesh(name)
+end
+
+-- 1 = top
+-- 2 = bottom
+-- 3 = right
+-- 4 = left
+-- 5 = back
+-- 6 = front
+rect_45(-0.50,-0.25, "models/q_1.obj")
+rect_45(-0.50, 0.00, "models/q_2.obj")
+rect_45(-0.50, 0.25, "models/q_3.obj")
+rect_45(-0.50, 0.50, "models/q_4.obj")
