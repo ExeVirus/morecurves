@@ -842,3 +842,178 @@ rect_45(-0.50,-0.25, "models/q_1.obj")
 rect_45(-0.50, 0.00, "models/q_2.obj")
 rect_45(-0.50, 0.25, "models/q_3.obj")
 rect_45(-0.50, 0.50, "models/q_4.obj")
+
+------------------------------Mesh Q----------------------------
+-- Object ED
+-- 45° rectangular prism smashed into a normal node
+--
+--        CA------------CB
+--        |             |
+--       _ML            |
+--    _-                |
+--   BL                 |
+--    \                 |
+--     \[CD^    _MR-----CC
+--      \    _-
+--        BR
+--
+----------------------------------------------------------------
+local end_45 = function(bottomh,toph,name)
+    reset_mesh()
+
+    local s = 0.147
+    local l = 0.853
+    local m = 0.206
+    local bl  = vector.new(  -l, bottomh,  -s, 0, 0, 0, 0, 0)
+    local br  = vector.new(  -s, bottomh,  -l, 0, 0, 0, 0, 0)
+    local bl2 = vector.new(  -l,    toph,  -s, 0, 0, 0, 0, 0)
+    local br2 = vector.new(  -s,    toph,  -l, 0, 0, 0, 0, 0)
+    local ml  = vector.new(-0.5, bottomh,   m, 0, 0, 0, 0, 0)
+    local mr  = vector.new(   m, bottomh,-0.5, 0, 0, 0, 0, 0)
+    local ml2 = vector.new(-0.5,    toph,   m, 0, 0, 0, 0, 0)
+    local mr2 = vector.new(   m,    toph,-0.5, 0, 0, 0, 0, 0)
+    local ca  = vector.new(-0.5, bottomh, 0.5, 0, 0, 0, 0, 0)
+    local ca2 = vector.new(-0.5,    toph, 0.5, 0, 0, 0, 0, 0)
+    local cb  = vector.new( 0.5, bottomh, 0.5, 0, 0, 0, 0, 0)
+    local cb2 = vector.new( 0.5,    toph, 0.5, 0, 0, 0, 0, 0)
+    local cc  = vector.new( 0.5, bottomh,-0.5, 0, 0, 0, 0, 0)
+    local cc2 = vector.new( 0.5,    toph,-0.5, 0, 0, 0, 0, 0)
+    local cd  = vector.new(-0.5, bottomh,-0.5, 0, 0, 0, 0, 0)
+    local cd2 = vector.new(-0.5,    toph,-0.5, 0, 0, 0, 0, 0)
+
+    -- center the side textures on 0,0, so start at - [sqrt(2) - 1] / 2
+    shapes.common.auto_quad( bl,  br, br2, bl2, 0, 0, 2, 1) -- angled square, bottom
+    shapes.common.auto_quad( bl, bl2, ml2,  ml, 0, 0, 4, 1) -- right angle, right
+    shapes.common.auto_quad( ca,  ml, ml2, ca2, 0, 0, 4, 1) -- right side, right
+    shapes.common.auto_quad( br,  mr, mr2, br2, 0, 0, 3, 1) -- left angle, left
+    shapes.common.auto_quad(cc2, mr2,  mr,  cc, 0, 0, 3, 1) -- left angle, left
+    shapes.common.auto_quad( cb,  ca, ca2, cb2, 0, 0, 1, 1) -- top side
+    shapes.common.auto_quad( cc,  cb, cb2, cc2, 0, 0, 1, 1) -- the other top side
+    shapes.common.auto_quad( cd,  ca,  cb,  cc, 0, 0, 5, 1) -- the other top side
+    shapes.common.auto_quad(cd2, cc2, cb2, ca2, 0, 0, 6, 1) -- the other top side
+
+    -- four mini triangle sections
+    shapes.common.auto_triangle(cd2, ml2, bl2, 0, 0, 6, 4)
+    shapes.common.auto_triangle(cd2, br2, mr2, 0, 0, 6, 4)
+    shapes.common.auto_triangle( cd,  bl,  ml, 0, 0, 5, 4)
+    shapes.common.auto_triangle( cd,  mr,  br, 0, 0, 5, 4)
+
+    export_mesh(name)
+end
+
+-- 1 = top
+-- 2 = bottom
+-- 3 = right
+-- 4 = left
+-- 5 = back
+-- 6 = front
+end_45(-0.50,-0.25, "models/ed_1.obj")
+end_45(-0.50, 0.00, "models/ed_2.obj")
+end_45(-0.50, 0.25, "models/ed_3.obj")
+end_45(-0.50, 0.50, "models/ed_4.obj")
+
+------------------------------Mesh P----------------------------
+-- Object EW
+-- 45° rectangular prism smashed into a normal node
+--
+--        TLB          TRB
+--      /    '.      .'    \
+--     /[CA    '.  .'    CB]\
+--    /    '     TM     '    \
+--   TLA                    TRA
+--    -_                    _-
+--      '_                _'
+--       _LM            RM_
+--    _-                    -_
+--   BLA                    BRA
+--    \    .            .    /
+--     \[CD    .'BM'.    CC]/
+--      \    .'      '.    /   
+--        BLB          BRB
+--
+----------------------------------------------------------------
+local end_4way = function(bottomh,toph,name)
+    reset_mesh()
+
+    local s = 0.147
+    local l = 0.853
+    local m = l - s
+
+    -- corners
+    local tla  = vector.new(  -l, bottomh,   s, 0, 0, 0, 0, 0)
+    local tla2 = vector.new(  -l,    toph,   s, 0, 0, 0, 0, 0)
+    local tlb  = vector.new(  -s, bottomh,   l, 0, 0, 0, 0, 0)
+    local tlb2 = vector.new(  -s,    toph,   l, 0, 0, 0, 0, 0)
+    local bla  = vector.new(  -l, bottomh,  -s, 0, 0, 0, 0, 0)
+    local bla2 = vector.new(  -l,    toph,  -s, 0, 0, 0, 0, 0)
+    local blb  = vector.new(  -s, bottomh,  -l, 0, 0, 0, 0, 0)
+    local blb2 = vector.new(  -s,    toph,  -l, 0, 0, 0, 0, 0)
+    local tra  = vector.new(   l, bottomh,   s, 0, 0, 0, 0, 0)
+    local tra2 = vector.new(   l,    toph,   s, 0, 0, 0, 0, 0)
+    local trb  = vector.new(   s, bottomh,   l, 0, 0, 0, 0, 0)
+    local trb2 = vector.new(   s,    toph,   l, 0, 0, 0, 0, 0)
+    local bra  = vector.new(   l, bottomh,  -s, 0, 0, 0, 0, 0)
+    local bra2 = vector.new(   l,    toph,  -s, 0, 0, 0, 0, 0)
+    local brb  = vector.new(   s, bottomh,  -l, 0, 0, 0, 0, 0)
+    local brb2 = vector.new(   s,    toph,  -l, 0, 0, 0, 0, 0)
+
+    -- middle points
+    local tm  = vector.new(   0, bottomh,   m, 0, 0, 0, 0, 0)
+    local tm2 = vector.new(   0,    toph,   m, 0, 0, 0, 0, 0)
+    local rm  = vector.new(   m, bottomh,   0, 0, 0, 0, 0, 0)
+    local rm2 = vector.new(   m,    toph,   0, 0, 0, 0, 0, 0)
+    local lm  = vector.new(  -m, bottomh,   0, 0, 0, 0, 0, 0)
+    local lm2 = vector.new(  -m,    toph,   0, 0, 0, 0, 0, 0)
+    local bm  = vector.new(   0, bottomh,  -m, 0, 0, 0, 0, 0)
+    local bm2 = vector.new(   0,    toph,  -m, 0, 0, 0, 0, 0)
+
+    -- Normal node corners
+    local ca  = vector.new(-0.5, bottomh, 0.5, 0, 0, 0, 0, 0)
+    local ca2 = vector.new(-0.5,    toph, 0.5, 0, 0, 0, 0, 0)
+    local cb  = vector.new( 0.5, bottomh, 0.5, 0, 0, 0, 0, 0)
+    local cb2 = vector.new( 0.5,    toph, 0.5, 0, 0, 0, 0, 0)
+    local cc  = vector.new( 0.5, bottomh,-0.5, 0, 0, 0, 0, 0)
+    local cc2 = vector.new( 0.5,    toph,-0.5, 0, 0, 0, 0, 0)
+    local cd  = vector.new(-0.5, bottomh,-0.5, 0, 0, 0, 0, 0)
+    local cd2 = vector.new(-0.5,    toph,-0.5, 0, 0, 0, 0, 0)
+
+    local q = 0.207
+    -- Top and bottom plus sign sides
+    shapes.common.auto_quad( bla, trb, tra, blb, 0,-q, 3, 1) -- bottom big chunk
+    shapes.common.auto_quad(  lm, tla, tlb,  tm, 0, 0, 3, 2) -- bottom side piece
+    shapes.common.auto_quad(  rm, bra, brb,  bm, 0, 0, 3, 4) -- bottom side piece2
+
+    shapes.common.auto_quad( bla2, blb2, tra2, trb2,-q, 0, 4, 1) -- top big chunk
+    shapes.common.auto_quad(  lm2,  tm2, tlb2, tla2, 0, 0, 4, 4) -- top side piece
+    shapes.common.auto_quad(  rm2,  bm2, brb2, bra2, 0, 0, 4, 2) -- top side piece2
+
+    -- The four squares
+    shapes.common.auto_quad(  tlb,  tla, tla2, tlb2, 0, 0, 1, 2)
+    shapes.common.auto_quad(  trb, trb2, tra2,  tra, 0, 0, 1, 1)
+    shapes.common.auto_quad(  blb, blb2, bla2,  bla, 0, 0, 2, 1)
+    shapes.common.auto_quad(  brb,  bra, bra2, brb2, 0, 0, 2, 2)
+
+    -- The eight inner corners
+    shapes.common.auto_quad(  tlb, tlb2,  tm2,   tm, 0, 0, 6, 1)
+    shapes.common.auto_quad(  trb,   tm,  tm2, trb2, 0, 0, 6, 8)
+    shapes.common.auto_quad(  blb,   bm,  bm2, blb2, 0, 0, 6, 2)
+    shapes.common.auto_quad(  brb, brb2,  bm2,   bm, 0, 0, 6, 5)
+
+    shapes.common.auto_quad(  tla,   lm,  lm2, tla2, 0, 0, 5, 8)
+    shapes.common.auto_quad(  bla, bla2,  lm2,   lm, 0, 0, 5, 1)
+    shapes.common.auto_quad(  tra, tra2,  rm2,   rm, 0, 0, 5, 5)
+    shapes.common.auto_quad(  bra,   rm,  rm2, bra2, 0, 0, 5, 2)
+
+    export_mesh(name)
+end
+
+-- 1 = top
+-- 2 = bottom
+-- 3 = right
+-- 4 = left
+-- 5 = back
+-- 6 = front
+end_4way(-0.50,-0.25, "models/ew_1.obj")
+end_4way(-0.50, 0.00, "models/ew_2.obj")
+end_4way(-0.50, 0.25, "models/ew_3.obj")
+end_4way(-0.50, 0.50, "models/ew_4.obj")
