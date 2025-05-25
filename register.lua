@@ -1,4 +1,4 @@
-return function(node_def_name)
+morecurves.registerAll = function(node_def_name)
     local function register_with_collisionBox(name, collision_box)
         local collisionbox = { type = "regular" }
         if(collision_box ~= nil) then
@@ -7,7 +7,7 @@ return function(node_def_name)
                 fixed = collision_box
             }
         end
-        minetest.register_node("morecurves:"..name,
+        core.register_node("morecurves:"..name,
         {
             description = name,
             drawtype = "mesh",
