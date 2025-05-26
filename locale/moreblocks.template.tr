@@ -1,0 +1,17 @@
+# textdomain: morecurves
+
+#: band_saw.lua
+
+Band Saw=
+Input material=
+Left-over=
+Max=
+Recycle output=
+Set=
+owned by @1=
+Band Saw is empty=
+Band Saw is working on @1=
+
+#: stairsminus/common.lua
+
+@1 Microblock=

@@ -6,7 +6,7 @@ Licensed under the zlib license. See LICENSE.md for more information.
 --]]
 local S = moreblocks.S
 -- default registrations
-if minetest.get_modpath("default") then
+if core.get_modpath("default") then
 	local default_nodes = { -- Default stairs/slabs/panels/microblocks:
 		"stone",
 		"stone_block",
@@ -56,7 +56,7 @@ if minetest.get_modpath("default") then
 	for _, name in pairs(default_nodes) do
 		local mod = "default"
 		local nodename = mod .. ":" .. name
-		local ndef = table.copy(minetest.registered_nodes[nodename])
+		local ndef = table.copy(core.registered_nodes[nodename])
 		ndef.sunlight_propagates = true
 
 		-- Stone and desert_stone drop cobble and desert_cobble respectively.
@@ -76,12 +76,12 @@ if minetest.get_modpath("default") then
 end
 
 -- farming registrations
-if minetest.get_modpath("farming") then
+if core.get_modpath("farming") then
 	local farming_nodes = {"straw"}
 	for _, name in pairs(farming_nodes) do
 		local mod = "farming"
 		local nodename = mod .. ":" .. name
-		local ndef = table.copy(minetest.registered_nodes[nodename])
+		local ndef = table.copy(core.registered_nodes[nodename])
 		ndef.sunlight_propagates = true
 
 		mod = "moreblocks"
@@ -90,14 +90,14 @@ if minetest.get_modpath("farming") then
 end
 
 -- wool registrations
-if minetest.get_modpath("wool") then
+if core.get_modpath("wool") then
 	local dyes = {"white", "grey", "black", "red", "yellow", "green", "cyan",
 	              "blue", "magenta", "orange", "violet", "brown", "pink",
 	              "dark_grey", "dark_green"}
 	for _, name in pairs(dyes) do
 		local mod = "wool"
 		local nodename = mod .. ":" .. name
-		local ndef = table.copy(minetest.registered_nodes[nodename])
+		local ndef = table.copy(core.registered_nodes[nodename])
 		ndef.sunlight_propagates = true
 
 		stairsminus:register_all(mod, name, nodename, ndef)

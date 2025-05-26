@@ -25,14 +25,46 @@ band_saw.cost_in_microblocks = {
 }
 
 band_saw.names = {
-	{"slope", "_inner_cut_half_raised"},
-	{"slope", "_outer"},
-	{"slope", "_outer_half"},
-	{"slope", "_outer_half_raised"},
-	{"slope", "_outer_cut"},
-	{"slope", "_outer_cut_half"},
-	{"slope", "_outer_cut_half_raised"},
-	{"slope", "_cut"},
+    {"curve", "_45"},
+    {"curve", "_45_3"},
+    {"curve", "_45_2"},
+    {"curve", "_45_1"},
+    {"curve", "_90"},
+    {"curve", "_90_3"},
+    {"curve", "_90_2"},
+    {"curve", "_90_1"},
+	{"curve", "_90_outer"},
+    {"curve", "_90_outer_3"},
+    {"curve", "_90_outer_2"},
+    {"curve", "_90_outer_1"},
+	{"curve", "_90_outer_large"},
+    {"curve", "_90_outer_large_3"},
+    {"curve", "_90_outer_large_2"},
+    {"curve", "_90_outer_large_1"},
+	{"curve", "_smooth_offset"},
+    {"curve", "_smooth_offset_3"},
+    {"curve", "_smooth_offset_2"},
+    {"curve", "_smooth_offset_1"},
+	{"curve", "_peak_45"},
+    {"curve", "_peak_45_3"},
+    {"curve", "_peak_45_2"},
+    {"curve", "_peak_45_1"},
+	{"curve", "_inner_peak_45"},
+    {"curve", "_inner_peak_45_3"},
+    {"curve", "_inner_peak_45_2"},
+    {"curve", "_inner_peak_45_1"},
+	{"curve", "_connector_end"},
+    {"curve", "_connector_end_3"},
+    {"curve", "_connector_end_2"},
+    {"curve", "_connector_end_1"},
+	{"curve", "_connector_angle"},
+    {"curve", "_connector_angle_3"},
+    {"curve", "_connector_angle_2"},
+    {"curve", "_connector_angle_1"},
+	{"curve", "_connector_all"},
+    {"curve", "_connector_all_3"},
+    {"curve", "_connector_all_2"},
+    {"curve", "_connector_all_1"},
 }
 
 function band_saw:get_cost(inv, stackname)
@@ -60,6 +92,7 @@ function band_saw:get_output_inv(modname, material, amount, max)
 		local cost = band_saw.cost_in_microblocks[i]
 		local balance = math.min(math.floor(amount/cost), max)
 		local nodename = modname .. ":" .. t[1] .. "_" .. material .. t[2]
+
 		if core.registered_nodes[nodename] then
 			pos = pos + 1
 			list[pos] = nodename .. " " .. balance
@@ -143,7 +176,7 @@ function band_saw:update_inventory(pos, amount)
 
 	-- Display:
 	inv:set_list("output",
-		self:get_output_inv(modname, material, amount,
+		self:get_output_inv("morecurves", material, amount,
 				meta:get_int("max_offered")))
 	-- Store how many microblocks are available:
 	meta:set_int("anz", amount)
@@ -170,9 +203,8 @@ end
 -- Moving the inventory of the band_saw around is not allowed because it
 -- is a fictional inventory. Moving inventory around would be rather
 -- impractical and make things more difficult to calculate:
-function band_saw.allow_metadata_inventory_move(
-    pos, from_list, from_index, to_list, to_index, count, player)
-return 0
+function band_saw.allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+	return 0
 end
 
 -- Only input- and recycle-slot (and microblock slot when empty) are intended as input slots:
