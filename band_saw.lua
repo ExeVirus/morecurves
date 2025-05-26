@@ -16,12 +16,11 @@ end
 -- How many microblocks does this shape at the output inventory cost:
 -- It may cause slight loss, but no gain.
 band_saw.cost_in_microblocks = {
-	1, 1, 1, 1, 1, 1, 1, 2,
-	2, 3, 2, 4, 2, 4, 5, 6,
-	7, 1, 1, 2, 4, 6, 7, 8,
-	1, 2, 2, 3, 1, 1, 2, 4,
-	4, 2, 6, 7, 3, 7, 7, 4,
-	8, 3, 2, 6, 2, 1, 3, 4
+	8, 8, 8, 8, 8, 8, 8, 8,
+	8, 8, 8, 8, 8, 8, 8, 8,
+	8, 8, 8, 8, 8, 8, 8, 8,
+	8, 8, 8, 8, 8, 8, 8, 8,
+	8, 8, 8, 8, 8, 8, 8, 8
 }
 
 band_saw.names = {
