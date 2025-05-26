@@ -30,9 +30,6 @@ function stairsminus:prepare_groups(groups)
 			end
 		end
 	end
-	if not moreblocks.config.stairsminus_in_creative_inventory then
-		result.not_in_creative_inventory = 1
-	end
 	return result
 end
 

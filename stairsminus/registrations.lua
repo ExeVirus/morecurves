@@ -4,7 +4,7 @@ More Blocks: registrations
 Copyright © 2011-2020 Hugo Locurcio and contributors.
 Licensed under the zlib license. See LICENSE.md for more information.
 --]]
-local S = moreblocks.S
+local S = morecurves.S
 -- default registrations
 if core.get_modpath("default") then
 	local default_nodes = { -- Default stairs/slabs/panels/microblocks:

@@ -5,7 +5,7 @@ Copyright © 2011-2020 Hugo Locurcio and contributors.
 Licensed under the zlib license. See LICENSE.md for more information.
 --]]
 
-local S = moreblocks.S
+local S = morecurves.S
 
 local descriptions = {
 	["micro"] = "Microblock",
@@ -178,5 +178,5 @@ stairsminus.register_single = function(category, alternate, info, modname, subna
 	end
 
 	core.register_node(":" ..modname.. ":" .. category .. "_" .. subname .. alternate, def)
-	stairsminus.register_recipes(category, alternate, modname, subname, recipeitem)
+	-- stairsminus.register_recipes(category, alternate, modname, subname, recipeitem)
 end
