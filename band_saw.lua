@@ -7,63 +7,61 @@ band_saw = {}
 band_saw.known_nodes = {}
 
 -- This is populated by stairsminus:register_micro:
-band_saw.microblocks = {}
 if core.get_modpath("moreblocks") then
-    band_saw.microblocks = circular_saw.microblocks
-    band_saw.known_nodes = circular_saw.known_nodes
+	band_saw.known_nodes = circular_saw.known_nodes
 end
 
 -- How many microblocks does this shape at the output inventory cost:
 -- It may cause slight loss, but no gain.
 band_saw.cost_in_microblocks = {
 	8, 8, 4, 2, 4, 3, 2, 1,
-	4, 3, 2, 1, 8, 6, 4, 2, 
+	4, 3, 2, 1, 8, 6, 4, 2,
 	8, 6, 4, 2, 8, 6, 4, 2,
 	6, 4, 3, 2, 8, 6, 4, 2,
 	8, 6, 4, 2, 8, 6, 4, 2
 }
 
 band_saw.names = {
-    {"curve", "_45"},
-    {"curve", "_45_3"},
-    {"curve", "_45_2"},
-    {"curve", "_45_1"},
-    {"curve", "_90"},
-    {"curve", "_90_3"},
-    {"curve", "_90_2"},
-    {"curve", "_90_1"},
+	{"curve", "_45"},
+	{"curve", "_45_3"},
+	{"curve", "_45_2"},
+	{"curve", "_45_1"},
+	{"curve", "_90"},
+	{"curve", "_90_3"},
+	{"curve", "_90_2"},
+	{"curve", "_90_1"},
 	{"curve", "_90_outer"},
-    {"curve", "_90_outer_3"},
-    {"curve", "_90_outer_2"},
-    {"curve", "_90_outer_1"},
+	{"curve", "_90_outer_3"},
+	{"curve", "_90_outer_2"},
+	{"curve", "_90_outer_1"},
 	{"curve", "_90_outer_large"},
-    {"curve", "_90_outer_large_3"},
-    {"curve", "_90_outer_large_2"},
-    {"curve", "_90_outer_large_1"},
+	{"curve", "_90_outer_large_3"},
+	{"curve", "_90_outer_large_2"},
+	{"curve", "_90_outer_large_1"},
 	{"curve", "_smooth_offset"},
-    {"curve", "_smooth_offset_3"},
-    {"curve", "_smooth_offset_2"},
-    {"curve", "_smooth_offset_1"},
+	{"curve", "_smooth_offset_3"},
+	{"curve", "_smooth_offset_2"},
+	{"curve", "_smooth_offset_1"},
 	{"curve", "_peak_45"},
-    {"curve", "_peak_45_3"},
-    {"curve", "_peak_45_2"},
-    {"curve", "_peak_45_1"},
+	{"curve", "_peak_45_3"},
+	{"curve", "_peak_45_2"},
+	{"curve", "_peak_45_1"},
 	{"curve", "_inner_peak_45"},
-    {"curve", "_inner_peak_45_3"},
-    {"curve", "_inner_peak_45_2"},
-    {"curve", "_inner_peak_45_1"},
+	{"curve", "_inner_peak_45_3"},
+	{"curve", "_inner_peak_45_2"},
+	{"curve", "_inner_peak_45_1"},
 	{"curve", "_connector_end"},
-    {"curve", "_connector_end_3"},
-    {"curve", "_connector_end_2"},
-    {"curve", "_connector_end_1"},
+	{"curve", "_connector_end_3"},
+	{"curve", "_connector_end_2"},
+	{"curve", "_connector_end_1"},
 	{"curve", "_connector_angle"},
-    {"curve", "_connector_angle_3"},
-    {"curve", "_connector_angle_2"},
-    {"curve", "_connector_angle_1"},
+	{"curve", "_connector_angle_3"},
+	{"curve", "_connector_angle_2"},
+	{"curve", "_connector_angle_1"},
 	{"curve", "_connector_all"},
-    {"curve", "_connector_all_3"},
-    {"curve", "_connector_all_2"},
-    {"curve", "_connector_all_1"},
+	{"curve", "_connector_all_3"},
+	{"curve", "_connector_all_2"},
+	{"curve", "_connector_all_1"},
 }
 
 function band_saw:get_cost(inv, stackname)
@@ -129,8 +127,8 @@ end
 -- Player has taken something out of the box or placed something inside
 -- that amounts to count microblocks:
 function band_saw:update_inventory(pos, amount)
-	local meta          = core.get_meta(pos)
-	local inv           = meta:get_inventory()
+	local meta		  = core.get_meta(pos)
+	local inv		   = meta:get_inventory()
 
 	amount = meta:get_int("anz") + amount
 
@@ -151,7 +149,7 @@ function band_saw:update_inventory(pos, amount)
 		return
 	end
 
-	local node_name = band_saw.microblocks[microstack:get_name()] or stack:get_name() or ""
+	local node_name = band_saw.known_nodes[microstack:get_name()] or stack:get_name() or ""
 	local node_def = stack:get_definition()
 	local name_parts = band_saw.known_nodes[node_name] or ""
 	local modname  = name_parts[1]
@@ -260,7 +258,7 @@ function band_saw.allow_metadata_inventory_put(pos, listname, index, stack, play
 
     if listname == "micro" then
         if not (inv:is_empty("input") and inv:is_empty("micro")) then return 0 end
-        for name, t in pairs(band_saw.microblocks) do
+        for name, t in pairs(band_saw.known_nodes) do
             if name == stackname and inv:room_for_item("input", stack) then
                 return count
             end
@@ -296,11 +294,12 @@ band_saw.on_metadata_inventory_put = function(pos, listname, index, stack, playe
 			band_saw:update_inventory(pos, cost * count)
 		end
 	end
+
 end
 
 band_saw.allow_metadata_inventory_take = function (pos, listname, index, stack, player)
-	local meta          = core.get_meta(pos)
-	local inv           = meta:get_inventory()
+	local meta = core.get_meta(pos)
+	local inv = meta:get_inventory()
 	local input_stack = inv:get_stack(listname,  index)
 	local player_inv = player:get_inventory()
 	if not player_inv:room_for_item("main", input_stack) then
@@ -312,8 +311,8 @@ end
 band_saw.on_metadata_inventory_take = function(pos, listname, index, stack, player)
 	-- Prevent (inbuilt) swapping between inventories with different blocks
 	-- corrupting player inventory or Saw with 'unknown' items.
-	local meta          = core.get_meta(pos)
-	local inv           = meta:get_inventory()
+	local meta = core.get_meta(pos)
+	local inv = meta:get_inventory()
 	local input_stack = inv:get_stack(listname,  index)
 	if not input_stack:is_empty() and input_stack:get_name()~=stack:get_name() then
 		local player_inv = player:get_inventory()
@@ -333,8 +332,7 @@ band_saw.on_metadata_inventory_take = function(pos, listname, index, stack, play
 	-- microblocks have to be subtracted:
 	if listname == "output" then
 		-- We do know how much each block at each position costs:
-		local cost = band_saw.cost_in_microblocks[index]
-				* stack:get_count()
+		local cost = band_saw.cost_in_microblocks[index] * stack:get_count()
 		band_saw:update_inventory(pos, -cost)
 	elseif listname == "micro" then
 		-- Each microblock costs 1 microblock:
@@ -378,8 +376,8 @@ function band_saw.on_construct(pos)
 	meta:set_string("infotext", S("Band Saw is empty"))
 
 	local inv = meta:get_inventory()
-	inv:set_size("input", 1)    -- Input slot for full blocks of material x.
-	inv:set_size("micro", 1)    -- Storage for 1-7 surplus microblocks.
+	inv:set_size("input", 1)	-- Input slot for full blocks of material x.
+	inv:set_size("micro", 1)	-- Storage for 1-7 surplus microblocks.
 	inv:set_size("recycle", 1)  -- Surplus partial blocks can be placed here.
 	inv:set_size("output", 6*8) -- 6x8 versions of stair-parts of material x.
 
@@ -400,64 +398,64 @@ function band_saw.can_dig(pos,player)
 end
 
 core.register_node("morecurves:band_saw",  {
-    description = S("Band Saw"),
-    drawtype = "nodebox",
-    node_box = {
-        type = "fixed",
-        fixed = {
-            {-0.5, -0.5, -0.5, 0.5, -0.375, 0.5}, -- Base
-            {-0.5, -0.375, -0.5, -0.375, 0.5, -0.3125}, -- Tower
-            {-0.375, 0.0625, -0.5, 0.375, 0.5, -0.3125}, -- Arm
-            {0.27, -0.375, -0.45, 0.29, 0.0625, -0.45}, -- Saw blade
-        },
-    },
-    tiles = {"default_chest_top.png",
-        "default_chest_top.png",
-        "default_chest_top.png",
-        "default_chest_top.png",
-        "[combine:16x16:0,0=default_chest_top.png\\^[resize\\:16x16:12,7=default_clay.png\\^[resize\\:1x7^[transformFX",
-        "[combine:16x16:0,0=default_chest_top.png\\^[resize\\:16x16]:12,7=default_clay.png\\^[resize\\:1x7"},
-    paramtype = "light",
-    sunlight_propagates = true,
-    paramtype2 = "facedir",
-    groups = {choppy = 2,oddly_breakable_by_hand = 2},
-    is_ground_content = false,
-    --sounds = morecurves.node_sound_wood_defaults(),
-    on_construct = band_saw.on_construct,
-    can_dig = band_saw.can_dig,
-    -- Set the owner of this band saw.
-    after_place_node = function(pos, placer)
-        local meta = core.get_meta(pos)
-        local owner = placer and placer:get_player_name() or ""
-        local owned_by = owner
+	description = S("Band Saw"),
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, -0.375, 0.5}, -- Base
+			{-0.5, -0.375, -0.5, -0.375, 0.5, -0.3125}, -- Tower
+			{-0.375, 0.0625, -0.5, 0.375, 0.5, -0.3125}, -- Arm
+			{0.27, -0.375, -0.45, 0.29, 0.0625, -0.45}, -- Saw blade
+		},
+	},
+	tiles = {"default_chest_top.png",
+		"default_chest_top.png",
+		"default_chest_top.png",
+		"default_chest_top.png",
+		"[combine:16x16:0,0=default_chest_top.png\\^[resize\\:16x16:12,7=default_clay.png\\^[resize\\:1x7^[transformFX",
+		"[combine:16x16:0,0=default_chest_top.png\\^[resize\\:16x16]:12,7=default_clay.png\\^[resize\\:1x7"},
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	groups = {choppy = 2,oddly_breakable_by_hand = 2},
+	is_ground_content = false,
+	--sounds = morecurves.node_sound_wood_defaults(),
+	on_construct = band_saw.on_construct,
+	can_dig = band_saw.can_dig,
+	-- Set the owner of this band saw.
+	after_place_node = function(pos, placer)
+		local meta = core.get_meta(pos)
+		local owner = placer and placer:get_player_name() or ""
+		local owned_by = owner
 
 		if owner ~= "" then
 			owned_by = (" (%s)"):format(S("owned by @1", owner))
 		end
 
-        meta:set_string("owner",  owner)
-        meta:set_string("infotext", S("Band Saw is empty") .. owned_by)
-    end,
+		meta:set_string("owner",  owner)
+		meta:set_string("infotext", S("Band Saw is empty") .. owned_by)
+	end,
 
-    -- The amount of items offered per shape can be configured:
-    on_receive_fields = band_saw.on_receive_fields,
-    allow_metadata_inventory_move = band_saw.allow_metadata_inventory_move,
-    -- Only input- and recycle-slot are intended as input slots:
-    allow_metadata_inventory_put = band_saw.allow_metadata_inventory_put,
-    allow_metadata_inventory_take = band_saw.allow_metadata_inventory_take,
-    -- Taking is allowed from all slots (even the internal microblock slot). Moving is forbidden.
-    -- Putting something in is slightly more complicated than taking anything because we have to make sure it is of a suitable material:
-    on_metadata_inventory_put = band_saw.on_metadata_inventory_put,
-    on_metadata_inventory_take = band_saw.on_metadata_inventory_take,
+	-- The amount of items offered per shape can be configured:
+	on_receive_fields = band_saw.on_receive_fields,
+	allow_metadata_inventory_move = band_saw.allow_metadata_inventory_move,
+	-- Only input- and recycle-slot are intended as input slots:
+	allow_metadata_inventory_put = band_saw.allow_metadata_inventory_put,
+	allow_metadata_inventory_take = band_saw.allow_metadata_inventory_take,
+	-- Taking is allowed from all slots (even the internal microblock slot). Moving is forbidden.
+	-- Putting something in is slightly more complicated than taking anything because we have to make sure it is of a suitable material:
+	on_metadata_inventory_put = band_saw.on_metadata_inventory_put,
+	on_metadata_inventory_take = band_saw.on_metadata_inventory_take,
 })
 
 core.register_craft({
-    output = "morecurves:band_saw",
-    recipe = {
-        { "group:wood",  "group:wood",  "group:wood"          },
-        { "group:wood",            "",  "default:steel_ingot" },
-        { "group:wood",  "group:wood",  "group:wood"          },
-    }
+	output = "morecurves:band_saw",
+	recipe = {
+		{ "group:wood",  "group:wood",  "group:wood"		  },
+		{ "group:wood",			"",  "default:steel_ingot" },
+		{ "group:wood",  "group:wood",  "group:wood"		  },
+	}
 })
 
 for _, t in pairs(band_saw.names) do
