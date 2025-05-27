@@ -20,7 +20,7 @@ local function v3(x,y,z)
 end
 
 ----------------------------------------------------------------
-------------------------------Mesh A----------------------------
+------------------------------Mesh 45---------------------------
 -- Object A
 -- 1.2 nodes tall
 -- vertical to 45° left curve
@@ -71,16 +71,16 @@ calc_tx(rev_outer)
 local groupsA = {4,3,2,1,6,5}
 local rotationsA = {4,2,2,4,1,3}
 local _rotationsA = {4,2,4,2,1,3}
-shapes.curve3d.curve2_closed(inner, outer, -0.50,-0.25, 0.00, 0.25,groupsA,rotationsA,"models/a_1.obj")
-shapes.curve3d.curve2_closed(inner, outer, -0.50, 0.00, 0.00, 0.50,groupsA,rotationsA,"models/a_2.obj")
-shapes.curve3d.curve2_closed(inner, outer, -0.50, 0.25, 0.00, 0.75,groupsA,rotationsA,"models/a_3.obj")
-shapes.curve3d.curve2_closed(inner, outer, -0.50, 0.50, 0.00, 1.00,groupsA,rotationsA,"models/a_4.obj")
-shapes.curve3d.curve2_closed(rev_inner, rev_outer, -0.50,-0.25, 0.00, 0.25,groupsA,_rotationsA,"models/a_1r.obj")
-shapes.curve3d.curve2_closed(rev_inner, rev_outer, -0.50, 0.00, 0.00, 0.50,groupsA,_rotationsA,"models/a_2r.obj")
-shapes.curve3d.curve2_closed(rev_inner, rev_outer, -0.50, 0.25, 0.00, 0.75,groupsA,_rotationsA,"models/a_3r.obj")
+shapes.curve3d.curve2_closed(inner, outer, -0.50,-0.25, 0.00, 0.25,groupsA,rotationsA,"models/45_1.obj")
+shapes.curve3d.curve2_closed(inner, outer, -0.50, 0.00, 0.00, 0.50,groupsA,rotationsA,"models/45_2.obj")
+shapes.curve3d.curve2_closed(inner, outer, -0.50, 0.25, 0.00, 0.75,groupsA,rotationsA,"models/45_3.obj")
+shapes.curve3d.curve2_closed(inner, outer, -0.50, 0.50, 0.00, 1.00,groupsA,rotationsA,"models/45.obj")
+shapes.curve3d.curve2_closed(rev_inner, rev_outer, -0.50,-0.25, 0.00, 0.25,groupsA,_rotationsA,"models/45_1r.obj")
+shapes.curve3d.curve2_closed(rev_inner, rev_outer, -0.50, 0.00, 0.00, 0.50,groupsA,_rotationsA,"models/45_2r.obj")
+shapes.curve3d.curve2_closed(rev_inner, rev_outer, -0.50, 0.25, 0.00, 0.75,groupsA,_rotationsA,"models/45_3r.obj")
 
 ----------------------------------------------------------------
-------------------------------Mesh B----------------------------
+------------------------------Mesh 90----------------------------
 -- Object B
 -- 1 nodes tall
 -- 90° left curve
@@ -98,10 +98,10 @@ calc_tx(curve)
 
 local groups_b = {5,6,4,3,1,2}
 rotations = {8,2,1,4,2,4}
-shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50,-0.25, 0.00, 0.25, groups_b, rotations, "models/b_1.obj")
-shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50, 0.00, 0.00, 0.50, groups_b, rotations, "models/b_2.obj")
-shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50, 0.25, 0.00, 0.75, groups_b, rotations, "models/b_3.obj")
-shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50, 0.50, 0.00, 1.00, groups_b, rotations, "models/b_4.obj")
+shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50,-0.25, 0.00, 0.25, groups_b, rotations, "models/90_1.obj")
+shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50, 0.00, 0.00, 0.50, groups_b, rotations, "models/90_2.obj")
+shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50, 0.25, 0.00, 0.75, groups_b, rotations, "models/90_3.obj")
+shapes.curve3d.point_curve_closed(v3(-0.5,-0.5,0.5), curve, -0.50, 0.50, 0.00, 1.00, groups_b, rotations, "models/90.obj")
 
 -- --------------------------------------------------------------
 -- ----------------------------Mesh _B---------------------------
@@ -118,10 +118,10 @@ curve = p_manip.multiply(curve, v(1,1,1,-1,-1,-1,1,1))
 
 local groups__b = {5,6,3,4,1,2}
 rotations = {6,4,1,8,2,4}
-shapes.curve3d.point_curve_closed(v3(0.5,-0.5,-0.5), curve, -0.50,-0.25, 0.00, 0.25, groups__b, rotations, "models/_b_1.obj")
-shapes.curve3d.point_curve_closed(v3(0.5,-0.5,-0.5), curve, -0.50, 0.00, 0.00, 0.50, groups__b, rotations, "models/_b_2.obj")
-shapes.curve3d.point_curve_closed(v3(0.5,-0.5,-0.5), curve, -0.50, 0.25, 0.00, 0.75, groups__b, rotations, "models/_b_3.obj")
-shapes.curve3d.point_curve_closed(v3(0.5,-0.5,-0.5), curve, -0.50, 0.50, 0.00, 1.00, groups__b, rotations, "models/_b_4.obj")
+shapes.curve3d.point_curve_closed(v3(0.5,-0.5,-0.5), curve, -0.50,-0.25, 0.00, 0.25, groups__b, rotations, "models/90_outer_1.obj")
+shapes.curve3d.point_curve_closed(v3(0.5,-0.5,-0.5), curve, -0.50, 0.00, 0.00, 0.50, groups__b, rotations, "models/90_outer_2.obj")
+shapes.curve3d.point_curve_closed(v3(0.5,-0.5,-0.5), curve, -0.50, 0.25, 0.00, 0.75, groups__b, rotations, "models/90_outer_3.obj")
+shapes.curve3d.point_curve_closed(v3(0.5,-0.5,-0.5), curve, -0.50, 0.50, 0.00, 1.00, groups__b, rotations, "models/90_outer.obj")
 
 ----------------------------------------------------------------
 ------------------------------Mesh A1---------------------------
@@ -314,10 +314,10 @@ end
 
 local groups_af = {5,6,2,3,6,1}
 rotations = {6,4,4,4,4,2}
-curve_AF(-0.50,-0.25, 0.00, 0.25,groups_af,rotations,"models/af_1.obj")
-curve_AF(-0.50, 0.00, 0.00, 0.50,groups_af,rotations, "models/af_2.obj")
-curve_AF(-0.50, 0.25, 0.25, 0.75,groups_af,rotations, "models/af_3.obj")
-curve_AF(-0.50, 0.50, 0.00, 1.00,groups_af,rotations, "models/af_4.obj")
+curve_AF(-0.50,-0.25, 0.00, 0.25,groups_af,rotations, "models/90_outer_large_1.obj")
+curve_AF(-0.50, 0.00, 0.00, 0.50,groups_af,rotations, "models/90_outer_large_2.obj")
+curve_AF(-0.50, 0.25, 0.25, 0.75,groups_af,rotations, "models/90_outer_large_3.obj")
+curve_AF(-0.50, 0.50, 0.00, 1.00,groups_af,rotations, "models/90_outer_large.obj")
 
 ----------------------------------------------------------------
 ------------------------------Mesh C----------------------------
@@ -389,10 +389,10 @@ end
 
 local groups_C = {6,5,2,3,4,1}
 rotations = {7,3,2,6,1,4}
-curve_C(-0.50,-0.25, 0.00, 0.25, groups_C, rotations, "models/c_1.obj")
-curve_C(-0.50, 0.00, 0.00, 0.50, groups_C, rotations, "models/c_2.obj")
-curve_C(-0.50, 0.25, 0.00, 0.75, groups_C, rotations, "models/c_3.obj")
-curve_C(-0.50, 0.50, 0.00, 1.00, groups_C, rotations, "models/c_4.obj")
+curve_C(-0.50,-0.25, 0.00, 0.25, groups_C, rotations, "models/smooth_offset_1.obj")
+curve_C(-0.50, 0.00, 0.00, 0.50, groups_C, rotations, "models/smooth_offset_2.obj")
+curve_C(-0.50, 0.25, 0.00, 0.75, groups_C, rotations, "models/smooth_offset_3.obj")
+curve_C(-0.50, 0.50, 0.00, 1.00, groups_C, rotations, "models/smooth_offset.obj")
 
 local curve_CR= function(bottomh,toph,bottom_ty,top_ty,groups,rotations,name)
     reset_mesh()
@@ -442,9 +442,9 @@ end
 
 local groups_CR = {6,5,2,4,3,1}
 rotations = {7,3,4,4,1,2}
-curve_CR(-0.50,-0.25, 0.00, 0.25, groups_CR, rotations, "models/c_1r.obj")
-curve_CR(-0.50, 0.00, 0.00, 0.50, groups_CR, rotations, "models/c_2r.obj")
-curve_CR(-0.50, 0.25, 0.00, 0.75, groups_CR, rotations, "models/c_3r.obj")
+curve_CR(-0.50,-0.25, 0.00, 0.25, groups_CR, rotations, "models/smooth_offset_1r.obj")
+curve_CR(-0.50, 0.00, 0.00, 0.50, groups_CR, rotations, "models/smooth_offset_2r.obj")
+curve_CR(-0.50, 0.25, 0.00, 0.75, groups_CR, rotations, "models/smooth_offset_3r.obj")
 
 ----------------------------------------------------------------
 ------------------------------Mesh C1---------------------------
@@ -716,10 +716,10 @@ end
 -- 6 = front
 local groups_D = {4,3,1,2,5,6}
 rotations = {3,5,2,4,1,3}
-curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/d_1.obj")
-curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/d_2.obj")
-curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/d_3.obj")
-curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/d_4.obj")
+curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/peak_45_1.obj")
+curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/peak_45_2.obj")
+curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/peak_45_3.obj")
+curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/peak_45.obj")
 
 
 ------------------------------Mesh _D----------------------------
@@ -785,10 +785,10 @@ end
 -- 6 = front
 local groups_D = {4,3,1,4,5,6}
 rotations = {3,5,2,4,1,3}
-arch_curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/_d_1.obj")
-arch_curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/_d_2.obj")
-arch_curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/_d_3.obj")
-arch_curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/_d_4.obj")
+arch_curve_D(-0.50,-0.25, 0.00, 0.25, groups_D, rotations, "models/inner_peak_45_1.obj")
+arch_curve_D(-0.50, 0.00, 0.00, 0.50, groups_D, rotations, "models/inner_peak_45_2.obj")
+arch_curve_D(-0.50, 0.25, 0.00, 0.75, groups_D, rotations, "models/inner_peak_45_3.obj")
+arch_curve_D(-0.50, 0.50, 0.00, 1.00, groups_D, rotations, "models/inner_peak_45.obj")
 
 ------------------------------Mesh Q----------------------------
 -- Object Q
@@ -838,10 +838,10 @@ end
 -- 4 = left
 -- 5 = back
 -- 6 = front
-rect_45(-0.50,-0.25, "models/q_1.obj")
-rect_45(-0.50, 0.00, "models/q_2.obj")
-rect_45(-0.50, 0.25, "models/q_3.obj")
-rect_45(-0.50, 0.50, "models/q_4.obj")
+rect_45(-0.50,-0.25, "models/connector_angle_1.obj")
+rect_45(-0.50, 0.00, "models/connector_angle_2.obj")
+rect_45(-0.50, 0.25, "models/connector_angle_3.obj")
+rect_45(-0.50, 0.50, "models/connector_angle.obj")
 
 ------------------------------Mesh Q----------------------------
 -- Object ED
@@ -907,10 +907,10 @@ end
 -- 4 = left
 -- 5 = back
 -- 6 = front
-end_45(-0.50,-0.25, "models/ed_1.obj")
-end_45(-0.50, 0.00, "models/ed_2.obj")
-end_45(-0.50, 0.25, "models/ed_3.obj")
-end_45(-0.50, 0.50, "models/ed_4.obj")
+end_45(-0.50,-0.25, "models/connector_end_1.obj")
+end_45(-0.50, 0.00, "models/connector_end_2.obj")
+end_45(-0.50, 0.25, "models/connector_end_3.obj")
+end_45(-0.50, 0.50, "models/connector_end.obj")
 
 ------------------------------Mesh P----------------------------
 -- Object EW
@@ -1013,7 +1013,7 @@ end
 -- 4 = left
 -- 5 = back
 -- 6 = front
-end_4way(-0.50,-0.25, "models/ew_1.obj")
-end_4way(-0.50, 0.00, "models/ew_2.obj")
-end_4way(-0.50, 0.25, "models/ew_3.obj")
-end_4way(-0.50, 0.50, "models/ew_4.obj")
+end_4way(-0.50,-0.25, "models/connector_all_1.obj")
+end_4way(-0.50, 0.00, "models/connector_all_2.obj")
+end_4way(-0.50, 0.25, "models/connector_all_3.obj")
+end_4way(-0.50, 0.50, "models/connector_all.obj")
