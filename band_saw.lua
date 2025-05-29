@@ -8,6 +8,7 @@ band_saw.known_nodes = {}
 
 -- This is populated by stairsminus:register_micro:
 if core.get_modpath("moreblocks") then
+	band_saw.microblocks = circular_saw.microblocks
 	band_saw.known_nodes = circular_saw.known_nodes
 end
 
@@ -149,7 +150,7 @@ function band_saw:update_inventory(pos, amount)
 		return
 	end
 
-	local node_name = band_saw.known_nodes[microstack:get_name()] or stack:get_name() or ""
+	local node_name = band_saw.microblocks[microstack:get_name()] or stack:get_name() or ""
 	local node_def = stack:get_definition()
 	local name_parts = band_saw.known_nodes[node_name] or ""
 	local modname  = name_parts[1]
@@ -168,21 +169,15 @@ function band_saw:update_inventory(pos, amount)
 
 	-- 0-7 microblocks may remain left-over:
 	inv:set_list("micro", {
-		"moreblocks" .. ":micro_" .. material .. " " .. (amount % 8)
+		modname .. ":micro_" .. material .. " " .. (amount % 8)
 	})
 
 	-- Display:
-	inv:set_list("output",
-		self:get_output_inv("morecurves", material, amount,
-				meta:get_int("max_offered")))
+	inv:set_list("output", self:get_output_inv("morecurves", material, amount, meta:get_int("max_offered")))
 	-- Store how many microblocks are available:
 	meta:set_int("anz", amount)
 
-	meta:set_string("infotext",
-		S("Band Saw is working on @1",
-			node_def and node_def.description or material
-		) .. owned_by
-	)
+	meta:set_string("infotext", S("Band Saw is working on @1", node_def and node_def.description or material) .. owned_by)
 end
 
 -- The amount of items offered per shape can be configured:
