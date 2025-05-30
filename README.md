@@ -3,9 +3,7 @@
 More Curves for [Luanti](https://www.luanti.org/), a free and open source infinite
 world block sandbox game.
 
-![Cool Screenshot](screenshot.jpg)
-
-![Set of blocks](set.jpg)
+![Set of curves added](https://github.com/ExeVirus/morecurves/blob/master/set.jpg)
 
 # How to Use
 
@@ -27,7 +25,7 @@ git clone https://github.com/exevirus/morecurves.git
 ```
 
 You can also
-[download a ZIP archive](https://github.com/exevirus/morecurves/archive/master.zip)
+[download a ZIP archive](https://github.com/ExeVirus/morecurves/releases)
 of More Curves.
 
 ### Enable the mod
@@ -77,7 +75,7 @@ versions than 5.0.0 will generally not be fixed.
 Copyright © 2025 ExeVirus
 
 - More Curves code and models are licensed under the Apache 2.0 license, see
-  [`LICENSE.md`](LICENSE.md) for details.
+  [`LICENSE.md`](https://github.com/ExeVirus/morecurves/blob/master/LICENSE.md) for details.
 
 - More Curves is directly inspired and derivative of [More Blocks](https://github.com/minetest-mods/moreblocks/), 
   which is lisensed under the [Zlib License](https://www.zlib.net/zlib_license.html)
