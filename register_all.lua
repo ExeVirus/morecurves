@@ -68,7 +68,7 @@ morecurves.register_all = function(mod_name, node_name, node_def)
         def.collision_box = collisionbox
         def.selection_box = collisionbox
         def.is_ground_content = def.is_ground_content == true
-        def.paramtype = "light"
+        def.paramtype = def.paramtype or "light"
         def.paramtype2 = def.paramtype2 or "facedir"
         if def.use_texture_alpha == nil then
             def.use_texture_alpha = node_def.use_texture_alpha
