@@ -5,6 +5,7 @@ band_saw = {}
 
 -- This is populated by stairsminus:register_all:
 band_saw.known_nodes = {}
+band_saw.microblocks = {}
 
 -- This is populated by stairsminus:register_micro:
 if core.get_modpath("moreblocks") then
@@ -342,7 +343,13 @@ end
 function band_saw.on_construct(pos)
 	local meta = core.get_meta(pos)
 	-- prepend background and slot styles from default if available
-	local fancy_inv = default.gui_bg..default.gui_bg_img..default.gui_slots
+	local fancy_inv = ""
+	if default and default.gui_bg then
+		fancy_inv = default.gui_bg .. default.gui_bg_img .. default.gui_slots
+	else
+		-- Fallback styling for Mineclonia / non-default games so slots draw proper boxes and borders
+		fancy_inv = "listcolors[#8b8b8b;#a4a4a4;#373737;#101010;#ffffff]"
+	end
 
 	meta:set_string(
 		"formspec", "size[11,10]"..fancy_inv..
@@ -352,8 +359,8 @@ function band_saw.on_construct(pos)
 		"list[current_name;micro;1.7,1;1,1;]" ..
 		"label[0,2;" ..F(S("Recycle output")).. "]" ..
 		"list[current_name;recycle;1.7,2;1,1;]" ..
-		"field[0.3,3.5;1,1;max_offered;" ..F(S("Max")).. ":;${max_offered}]" ..
-		"button[1,3.2;1.7,1;Set;" ..F(S("Set")).. "]" ..
+		"field[0.3,3.6;1.2,0.8;max_offered;" ..F(S("Max")) .. ":;${max_offered}]" ..
+		"button[1.5,3.5;1.1,0.8;Set;" ..F(S("Set")).. "]" ..
 		"list[current_name;output;2.8,0;8,5;]" ..
 		"list[current_player;main;1.5,6.25;8,4;]" ..
 		"listring[current_name;output]" ..
@@ -392,6 +399,12 @@ function band_saw.can_dig(pos,player)
 	return true
 end
 
+local wood_tile = "default_chest_top.png"
+local clay_tile = "default_clay.png"
+if not core.get_modpath("default") and core.get_modpath("mcl_core") then
+	wood_tile = "mcl_core_planks_big_oak.png"
+end
+
 core.register_node("morecurves:band_saw",  {
 	description = S("Band Saw"),
 	drawtype = "nodebox",
@@ -404,18 +417,20 @@ core.register_node("morecurves:band_saw",  {
 			{0.27, -0.375, -0.45, 0.29, 0.0625, -0.45}, -- Saw blade
 		},
 	},
-	tiles = {"default_chest_top.png",
-		"default_chest_top.png",
-		"default_chest_top.png",
-		"default_chest_top.png",
-		"[combine:16x16:0,0=default_chest_top.png\\^[resize\\:16x16:12,7=default_clay.png\\^[resize\\:1x7^[transformFX",
-		"[combine:16x16:0,0=default_chest_top.png\\^[resize\\:16x16]:12,7=default_clay.png\\^[resize\\:1x7"},
+	tiles = {
+		wood_tile,
+		wood_tile,
+		wood_tile,
+		wood_tile,
+		"[combine:16x16:0,0=" .. wood_tile .. "\\^[resize\\:16x16:12,7=" .. clay_tile .. "\\^[resize\\:1x7^[transformFX",
+		"[combine:16x16:0,0=" .. wood_tile .. "\\^[resize\\:16x16]:12,7=" .. clay_tile .. "\\^[resize\\:1x7"
+	},
 	paramtype = "light",
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
-	groups = {choppy = 2,oddly_breakable_by_hand = 2},
+	groups = {choppy = 2,oddly_breakable_by_hand = 2,axey = 1,handy = 1,pickaxey = 1},
 	is_ground_content = false,
-	--sounds = morecurves.node_sound_wood_defaults(),
+	sounds = morecurves.node_sound_wood_defaults and morecurves.node_sound_wood_defaults(),
 	on_construct = band_saw.on_construct,
 	can_dig = band_saw.can_dig,
 	-- Set the owner of this band saw.
@@ -444,12 +459,17 @@ core.register_node("morecurves:band_saw",  {
 	on_metadata_inventory_take = band_saw.on_metadata_inventory_take,
 })
 
+local recipe_ingot = "group:ingot_iron"
+if not core.get_modpath("default") and core.get_modpath("mcl_core") then
+	recipe_ingot = "mcl_core:iron_ingot"
+end
+
 core.register_craft({
 	output = "morecurves:band_saw",
 	recipe = {
-		{ "group:wood",  "group:wood",  "group:wood"		  },
-		{ "group:wood",			"",  "default:steel_ingot" },
-		{ "group:wood",  "group:wood",  "group:wood"		  },
+		{ "group:wood",  "group:wood",  "group:wood" },
+		{ "group:wood",  "",            recipe_ingot },
+		{ "group:wood",  "group:wood",  "group:wood" },
 	}
 })
 

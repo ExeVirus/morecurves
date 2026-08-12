@@ -19,7 +19,7 @@ morecurves.S = core.get_translator("morecurves")
 
 dofile(modpath .. "/register_all.lua")
 
-if core.get_modpath("default") then
+if core.get_modpath("default") or core.get_modpath("mcl_core") then
     dofile(modpath .. "/sounds.lua")
     dofile(modpath .. "/band_saw.lua")
     if not core.get_modpath("moreblocks") then
@@ -27,9 +27,9 @@ if core.get_modpath("default") then
     end
 end
 -- the external API (single function) for other mods/servers/games
--- Needed to handle creation of microblocks if playing with `default` on
+-- Needed to handle creation of microblocks if playing with `default` or `mcl_core` on
 dofile(modpath .. "/add_new_node.lua") 
 
-if core.get_modpath("default") then
+if core.get_modpath("default") or core.get_modpath("mcl_core") then
     dofile(modpath .. "/default_registrations.lua") --curves
 end
